@@ -29,7 +29,3 @@ We need some test ETH to be able to transact on the Rinkeby network. Go to a fau
 
 - https://faucets.chain.link/rinkeby
 - https://faucet.rinkeby.io/ (May be offline)
-
-### 5. Buy An NFT On OpenSea TestNet
-
-We need to buy some NFTs for the Rinkeby test wallet you created.
