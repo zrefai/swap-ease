@@ -62,12 +62,12 @@ export const NavBar = () => {
     <Box
       sx={{
         display: 'flex',
+        position: 'absolute',
         alignItems: 'center',
         width: '100vw',
         height: theme.spacing(10),
         boxShadow: defaultShadow,
         background: 'white',
-        marginBottom: theme.spacing(6),
         padding: theme.spacing(3),
       }}
     >
