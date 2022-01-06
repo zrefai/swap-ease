@@ -5,7 +5,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "yarn jest",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
@@ -24,6 +24,8 @@
     "babel-loader": "8.1.0",
     "enzyme": "^3.11.0",
     "file-loader": "^6.2.0",
+    "jsdom": "^19.0.0",
+    "jsdom-global": "^3.0.2",
     "moralis": "^0.0.154",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

@@ -9,8 +9,8 @@ exports[`NavBar matches snapshot 1`] = `
       "boxShadow": "0px 2px 4px rgba(0, 0, 0, 0.14)",
       "display": "flex",
       "height": "80px",
-      "marginBottom": "48px",
       "padding": "24px",
+      "position": "absolute",
       "width": "100vw",
     }
   }

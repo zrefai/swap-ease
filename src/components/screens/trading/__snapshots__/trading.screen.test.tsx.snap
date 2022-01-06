@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TradingScreen matches snapshot 1`] = `
+<ScreenContainer>
+  <ForwardRef(Typography)>
+    Trading Screen
+  </ForwardRef(Typography)>
+</ScreenContainer>
+`;

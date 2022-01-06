@@ -1,9 +1,10 @@
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
+import { ScreenContainer } from '../../screen-container/screen-container';
 
 export const TradingScreen = () => {
   return (
-    <Box>
+    <ScreenContainer>
       <Typography>Trading Screen</Typography>
-    </Box>
+    </ScreenContainer>
   );
 };
