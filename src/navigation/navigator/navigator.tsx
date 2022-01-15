@@ -16,7 +16,6 @@ export const Navigator = () => {
     >
       <Router>
         <NavBar />
-        {/* Add styles for pages around routes */}
         <Routes>
           <Route
             path={NavigationConfig.root.route}

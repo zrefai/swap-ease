@@ -5,11 +5,6 @@ import { NFTMetadata } from '../../../models/NFTMetadata/NFTMetadata';
 import { WalletScreen } from './wallet.screen';
 import { walletScreenContent } from './wallet.screen.content';
 
-/*
-Had to remove `const pkg = require('./package');` from  /Users/zakirefai/Work/swap-ease/node_modules/swarm-js/node_modules/got/index.js
-which was causing issues during testing, not sure why this was causing issues
-*/
-
 jest.mock('react-moralis');
 const useMoralisMock = useMoralis as jest.Mock;
 const useNFTBalancesMock = useNFTBalances as jest.Mock;
