@@ -1,0 +1,129 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WalletScreen matches snapshot, displays nfts when isAuthenticated is true 1`] = `
+<ScreenContainer>
+  <ForwardRef(Box)
+    sx={
+      Object {
+        "display": "flex",
+        "flexWrap": "wrap",
+        "gap": "32px",
+        "justifyContent": "center",
+        "paddingBottom": "96px",
+      }
+    }
+  >
+    <ForwardRef(Box)
+      sx={
+        Object {
+          "background": "white",
+          "borderRadius": "32px",
+          "boxShadow": "0px 2px 4px rgba(0, 0, 0, 0.14)",
+          "display": "flex",
+          "flexDirection": "column",
+          "height": "300px",
+          "padding": "20px",
+          "width": "240px",
+        }
+      }
+    >
+      <img
+        alt="nft"
+        src="imageURL1"
+        style={
+          Object {
+            "borderRadius": "32px",
+            "height": "240px",
+          }
+        }
+      />
+      <ForwardRef(Typography)
+        color="GrayText"
+        sx={
+          Object {
+            "marginTop": "16px",
+          }
+        }
+        variant="caption"
+      >
+        name1
+      </ForwardRef(Typography)>
+      <ForwardRef(Typography)
+        variant="body1"
+      >
+        nftName1
+      </ForwardRef(Typography)>
+    </ForwardRef(Box)>
+    <ForwardRef(Box)
+      sx={
+        Object {
+          "background": "white",
+          "borderRadius": "32px",
+          "boxShadow": "0px 2px 4px rgba(0, 0, 0, 0.14)",
+          "display": "flex",
+          "flexDirection": "column",
+          "height": "300px",
+          "padding": "20px",
+          "width": "240px",
+        }
+      }
+    >
+      <img
+        alt="nft"
+        src="imageURL2"
+        style={
+          Object {
+            "borderRadius": "32px",
+            "height": "240px",
+          }
+        }
+      />
+      <ForwardRef(Typography)
+        color="GrayText"
+        sx={
+          Object {
+            "marginTop": "16px",
+          }
+        }
+        variant="caption"
+      >
+        name2
+      </ForwardRef(Typography)>
+      <ForwardRef(Typography)
+        variant="body1"
+      >
+        nftName2
+      </ForwardRef(Typography)>
+    </ForwardRef(Box)>
+  </ForwardRef(Box)>
+</ScreenContainer>
+`;
+
+exports[`WalletScreen matches snapshot, sign in button if isAuthenticated is false 1`] = `
+<ForwardRef(Box)
+  sx={
+    Object {
+      "alignItems": "center",
+      "display": "flex",
+      "flexDirection": "column",
+      "height": "100%",
+      "justifyContent": "center",
+    }
+  }
+>
+  <ForwardRef(Typography)>
+    Sign into your Meta Mask wallet to see your NFTs and more!
+  </ForwardRef(Typography)>
+  <ForwardRef(Button)
+    onClick={[Function]}
+    sx={
+      Object {
+        "marginTop": "32px",
+      }
+    }
+    variant="contained"
+  >
+    Sign into MetaMask
+  </ForwardRef(Button)>
+</ForwardRef(Box)>
+`;

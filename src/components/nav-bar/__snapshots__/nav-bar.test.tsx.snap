@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NavBar matches snapshot 1`] = `
+<ForwardRef(Box)
+  sx={
+    Object {
+      "alignItems": "center",
+      "background": "white",
+      "boxShadow": "0px 2px 4px rgba(0, 0, 0, 0.14)",
+      "display": "flex",
+      "height": "80px",
+      "padding": "24px",
+      "position": "absolute",
+      "width": "100vw",
+    }
+  }
+>
+  <SwapEaseLogo />
+  <ForwardRef(Box)
+    sx={
+      Object {
+        "border": "1px solid #000",
+        "height": "100%",
+        "marginLeft": "24px",
+        "marginRight": "24px",
+      }
+    }
+  />
+  <ForwardRef(Button)
+    color="primary"
+    onClick={[Function]}
+    size="large"
+    startIcon={<Memo />}
+    sx={
+      Object {
+        "marginLeft": "12px",
+        "marginRight": "12px",
+      }
+    }
+    variant="text"
+  >
+    Wallet
+  </ForwardRef(Button)>
+  <ForwardRef(Button)
+    color="secondary"
+    onClick={[Function]}
+    size="large"
+    startIcon={<Memo />}
+    sx={
+      Object {
+        "marginLeft": "12px",
+        "marginRight": "12px",
+      }
+    }
+    variant="text"
+  >
+    Trading
+  </ForwardRef(Button)>
+</ForwardRef(Box)>
+`;

@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navigator matches snapshot 1`] = `
+<ForwardRef(Box)
+  sx={
+    Object {
+      "background": "#F2F2F2",
+      "height": "100vh",
+      "overflow": "auto",
+    }
+  }
+>
+  <BrowserRouter>
+    <NavBar />
+    <Routes>
+      <Route
+        element={<WalletScreen />}
+        path="/"
+      />
+      <Route
+        element={<TradingScreen />}
+        path="/trading"
+      />
+    </Routes>
+  </BrowserRouter>
+</ForwardRef(Box)>
+`;

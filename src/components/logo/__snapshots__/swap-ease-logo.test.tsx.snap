@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SwapEaseLogo matches snapshot 1`] = `
+<ForwardRef(Avatar)
+  alt="Swap Ease Logo"
+  src={
+    Object {
+      "process": [Function],
+    }
+  }
+  style={
+    Object {
+      "height": "40px",
+      "marginLeft": "12px",
+      "marginRight": "12px",
+      "width": "100px",
+    }
+  }
+  variant="square"
+/>
+`;

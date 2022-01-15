@@ -17,7 +17,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "types": ["node", "jest"],
+    "typeRoots": ["./node_modules/@types"]
   },
-  "include": ["src"]
+  "include": ["./src", "./src/custom.d.ts", "test/setupTests.ts"]
 }

@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ScreenContainer matches snapshot 1`] = `
+<ForwardRef(Box)
+  sx={
+    Object {
+      "display": "flex",
+      "justifyContent": "center",
+      "marginTop": "84px",
+      "overflow": "auto",
+      "paddingLeft": "96px",
+      "paddingRight": "96px",
+    }
+  }
+>
+  <div />
+</ForwardRef(Box)>
+`;

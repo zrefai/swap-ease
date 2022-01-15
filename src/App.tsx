@@ -1,21 +1,18 @@
-import { Box, ThemeProvider, Typography } from '@mui/material';
+import { ThemeProvider } from '@mui/material';
+import { MoralisProvider } from 'react-moralis';
+import { Navigator } from './navigation/navigator/navigator';
 import { defaultMuiTheme } from './theme/defauli-mui-theme';
 
 function App() {
   return (
-    <ThemeProvider theme={defaultMuiTheme}>
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: 1,
-          height: '100vh',
-        }}
-      >
-        <Typography>SwapEase UX</Typography>
-      </Box>
-    </ThemeProvider>
+    <MoralisProvider
+      appId={'YCs243vRMJ2l1SBq8IG95EnSa7EroUWsgPnpAcy8'}
+      serverUrl={'https://dfyfnzksvmcm.usemoralis.com:2053/server'}
+    >
+      <ThemeProvider theme={defaultMuiTheme}>
+        <Navigator />
+      </ThemeProvider>
+    </MoralisProvider>
   );
 }
 
