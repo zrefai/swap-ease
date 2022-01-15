@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ScreenContainer matches snapshot, sign in button if isAuthenticated is false 1`] = `
+exports[`ScreenContainer matches snapshot 1`] = `
 <ForwardRef(Box)
   sx={
     Object {
