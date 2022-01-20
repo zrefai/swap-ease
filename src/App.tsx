@@ -4,10 +4,13 @@ import { Navigator } from './navigation/navigator/navigator';
 import { defaultMuiTheme } from './theme/defauli-mui-theme';
 
 function App() {
+  const appId = process.env.REACT_APP_APP_ID;
+  const serverUrl = process.env.REACT_APP_SERVER_URL;
+  
   return (
     <MoralisProvider
-      appId={'YCs243vRMJ2l1SBq8IG95EnSa7EroUWsgPnpAcy8'}
-      serverUrl={'https://dfyfnzksvmcm.usemoralis.com:2053/server'}
+      appId={appId as string}
+      serverUrl={serverUrl as string}
     >
       <ThemeProvider theme={defaultMuiTheme}>
         <Navigator />
