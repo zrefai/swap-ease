@@ -1,21 +1,27 @@
 import { ThemeProvider } from '@mui/material';
-import { MoralisProvider } from 'react-moralis';
 import { Navigator } from './navigation/navigator/navigator';
 import { defaultMuiTheme } from './theme/defauli-mui-theme';
 
+declare global {
+  interface Window {
+    ethereum: any;
+  }
+}
+
 function App() {
-  const appId = process.env.REACT_APP_APP_ID;
-  const serverUrl = process.env.REACT_APP_SERVER_URL;
-  
+  // const network = 'mainnet';
+  // const defaultProvider = ethers.getDefaultProvider(network, {
+  //   etherscan: 'GKNH2UZYW4WEWDFAGPESGY29Y1F3CJMEFC',
+  //   alchemy: 'sio3HfFITemtRtiw6OYIlwHvu1Ui68Ec',
+  // });
+  // const walletProvider = new ethers.providers.Web3Provider(ethereum);
+  // const appId = process.env.REACT_APP_APP_ID;
+  // const serverUrl = process.env.REACT_APP_SERVER_URL;
+
   return (
-    <MoralisProvider
-      appId={appId as string}
-      serverUrl={serverUrl as string}
-    >
-      <ThemeProvider theme={defaultMuiTheme}>
-        <Navigator />
-      </ThemeProvider>
-    </MoralisProvider>
+    <ThemeProvider theme={defaultMuiTheme}>
+      <Navigator />
+    </ThemeProvider>
   );
 }
 

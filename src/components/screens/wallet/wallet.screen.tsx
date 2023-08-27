@@ -1,89 +1,55 @@
-import { Box, Button, Typography, useTheme } from '@mui/material';
-import { useEffect } from 'react';
-import { useMoralis, useNFTBalances } from 'react-moralis';
-import { NFTMetadata } from '../../../models/NFTMetadata/NFTMetadata';
-import { defaultShadow } from '../../../theme/defauli-mui-theme';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Typography,
+  useTheme,
+} from '@mui/material';
+import { useWallet } from '../../../hooks/use-wallet';
 import { ScreenContainer } from '../../screen-container/screen-container';
 import { walletScreenContent } from './wallet.screen.content';
+import { createAlchemyWeb3, GetNftsResponse, Nft } from '@alch/alchemy-web3';
+import { useEffect, useState } from 'react';
+import { NftCard } from '../../nft-card/nft-card';
+
+const apiKey = 'sio3HfFITemtRtiw6OYIlwHvu1Ui68Ec';
+
+const web3 = createAlchemyWeb3(
+  `https://eth-mainnet.alchemyapi.io/v2/${apiKey}`
+);
 
 export const WalletScreen = () => {
   const theme = useTheme();
-  const { data } = useNFTBalances();
-  const { authenticate, isAuthenticated, account, logout, isInitialized } =
-    useMoralis();
-
-  const renderNFT = (data: any) => {
-    if (data && data.result) {
-      return data.result.map((nft: any, index: number) => {
-        const metadata: NFTMetadata = nft.metadata;
-        const collectionName = nft.name ?? '';
-        const image = metadata?.image ?? '';
-        const name = metadata?.name ?? '';
-        const key = `${index}${name}${nft.token_id}`;
-
-        if (nft.is_valid) {
-          return (
-            <Box
-              key={key}
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                width: '240px',
-                height: '300px',
-                background: 'white',
-                boxShadow: defaultShadow,
-                borderRadius: theme.spacing(4),
-                padding: theme.spacing(2.5),
-              }}
-            >
-              <img
-                src={image}
-                alt='nft'
-                style={{ borderRadius: theme.spacing(4), height: '240px' }}
-              />
-              <Typography
-                variant='caption'
-                color='GrayText'
-                sx={{ marginTop: theme.spacing(2) }}
-              >
-                {collectionName}
-              </Typography>
-              <Typography variant='body1'>{name}</Typography>
-            </Box>
-          );
-        }
-        return null;
-      });
-    }
-    return null;
-  };
+  const { address, onConnectWallet } = useWallet();
+  const [nfts, setNfts] = useState<GetNftsResponse>();
+  console.log(nfts);
 
   useEffect(() => {
-    if (isInitialized && account === null) {
-      logout();
+    async function fetchNftData() {
+      // You can await here
+      if (address) {
+        const nftData = await web3.alchemy.getNfts({
+          owner: address,
+        });
+        setNfts(nftData);
+      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [account]);
+    fetchNftData();
+  }, [address]);
 
-  const authenticateWallet = () => {
-    authenticate({ signingMessage: walletScreenContent.authenticationMessage });
-  };
-
-  if (!isAuthenticated) {
+  if (!address) {
     return (
       <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100%',
-        }}
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        height="100%"
       >
         <Typography>{walletScreenContent.signInLabel}</Typography>
         <Button
-          onClick={authenticateWallet}
-          variant='contained'
+          onClick={onConnectWallet}
+          variant="contained"
           sx={{ marginTop: theme.spacing(4) }}
         >
           {walletScreenContent.signInButtonLabel}
@@ -94,17 +60,29 @@ export const WalletScreen = () => {
 
   return (
     <ScreenContainer>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          flexWrap: 'wrap',
-          gap: theme.spacing(4),
-          paddingBottom: theme.spacing(12),
-        }}
-      >
-        {renderNFT(data)}
-      </Box>
+      {nfts ? (
+        <Box
+          display="flex"
+          justifyContent="center"
+          flexWrap="wrap"
+          gap={theme.spacing(4)}
+          paddingBottom={theme.spacing(12)}
+        >
+          {nfts.ownedNfts.map((nft: Nft, index: number) => {
+            // const metadata = nft.metadata as NftMetadata;
+            // if (metadata) {
+            return <NftCard key={`${index}${nft.id}`} web3={web3} nft={nft} />;
+            // } else if (nft?.token_uri) {
+            //   return <NftCardUri key={key} data={nft} />;
+            // }
+            // return null;
+          })}
+        </Box>
+      ) : (
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <CircularProgress />
+        </Box>
+      )}
     </ScreenContainer>
   );
 };

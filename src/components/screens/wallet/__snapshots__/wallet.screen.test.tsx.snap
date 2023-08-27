@@ -27,16 +27,27 @@ exports[`WalletScreen matches snapshot, displays nfts when isAuthenticated is tr
         }
       }
     >
-      <img
-        alt="nft"
-        src="imageURL1"
-        style={
+      <ForwardRef(Box)
+        sx={
           Object {
-            "borderRadius": "32px",
+            "display": "flex",
             "height": "240px",
+            "justifyContent": "center",
           }
         }
-      />
+      >
+        <img
+          alt="nft"
+          src="imageURL1"
+          style={
+            Object {
+              "borderRadius": "32px",
+              "maxHeight": "100%",
+              "maxWidth": "100%",
+            }
+          }
+        />
+      </ForwardRef(Box)>
       <ForwardRef(Typography)
         color="GrayText"
         sx={
@@ -68,16 +79,27 @@ exports[`WalletScreen matches snapshot, displays nfts when isAuthenticated is tr
         }
       }
     >
-      <img
-        alt="nft"
-        src="imageURL2"
-        style={
+      <ForwardRef(Box)
+        sx={
           Object {
-            "borderRadius": "32px",
+            "display": "flex",
             "height": "240px",
+            "justifyContent": "center",
           }
         }
-      />
+      >
+        <img
+          alt="nft"
+          src="imageURL2"
+          style={
+            Object {
+              "borderRadius": "32px",
+              "maxHeight": "100%",
+              "maxWidth": "100%",
+            }
+          }
+        />
+      </ForwardRef(Box)>
       <ForwardRef(Typography)
         color="GrayText"
         sx={

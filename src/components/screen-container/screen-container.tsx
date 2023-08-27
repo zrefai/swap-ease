@@ -8,14 +8,12 @@ export const ScreenContainer = ({ children }: IScreenContainerProps) => {
   const theme = useTheme();
   return (
     <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        overflow: 'auto',
-        marginTop: '84px',
-        paddingLeft: theme.spacing(12),
-        paddingRight: theme.spacing(12),
-      }}
+      display="flex"
+      justifyContent="center"
+      overflow="auto"
+      marginTop="84px"
+      paddingLeft={theme.spacing(12)}
+      paddingRight={theme.spacing(12)}
     >
       {children}
     </Box>

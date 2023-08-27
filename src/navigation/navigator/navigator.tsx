@@ -7,13 +7,7 @@ import { NavigationConfig } from './routes';
 
 export const Navigator = () => {
   return (
-    <Box
-      sx={{
-        height: '100vh',
-        overflow: 'auto',
-        background: '#F2F2F2',
-      }}
-    >
+    <Box height="100vh" overflow="auto" sx={{ background: '#F2F2F2' }}>
       <Router>
         <NavBar />
         <Routes>

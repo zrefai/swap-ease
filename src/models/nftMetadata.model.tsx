@@ -1,11 +1,11 @@
-export interface NFTMetadata {
+export interface NftMetadata {
   description?: string;
-  attributes?: NFTAttribute[];
+  attributes?: NftAttribute[];
   image?: string;
   name?: string;
 }
 
-interface NFTAttribute {
+interface NftAttribute {
   trait_type: string;
   value: string;
 }
