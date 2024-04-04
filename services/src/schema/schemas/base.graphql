@@ -1,0 +1,70 @@
+# @contact isn't being printed to the generated-schema.graphql file
+# See https://github.com/apollographql/federation/issues/1847
+directive @contact(
+  "Contact title of the subgraph owner"
+  name: String!
+  "URL where the subgraph's owner can be reached"
+  email: String
+  "Other relevant notes can be included here; supports markdown links"
+  description: String
+) on SCHEMA
+
+extend schema
+  @contact(
+    name: "SwapEase Services"
+    email: "zkrefai@gmail.com"
+    description: "Send urgent issues to [#oncall](https://yourteam.slack.com/archives/oncall)."
+  )
+  @link(
+    url: "https://specs.apollo.dev/federation/v2.3"
+    import: [
+      "@key"
+      "@extends"
+      "@shareable"
+      "@inaccessible"
+      "@override"
+      "@external"
+      "@provides"
+      "@requires"
+      "@tag"
+      "@composeDirective"
+      "@interfaceObject"
+    ]
+  )
+
+type Query
+type Mutation
+
+type MutationResponse {
+  success: Boolean!
+  message: String!
+  code: Int!
+}
+
+type PageInfo {
+  # Total count of all edges in the page
+  totalCount: Int!
+  # Indicates whether more edges exist prior to the set defined by the client's arguments.
+  hasPreviousPage: Boolean!
+  # Indicates whether more edges exist following the set defined by the client's arguments.
+  hasNextPage: Boolean!
+  # Cursor corresponding to the first node in a list of edges.
+  startCursor: Cursor
+  # Cursor corresponding to the last node in a list of edges.
+  endCursor: Cursor
+}
+
+input PageArgs {
+  # Number of edges to return from (and including) first edge.
+  first: PositiveInt
+  # Return results after cursor. When using `after: cursor`, the edge closest to `cursor` will come last in the result edges.
+  after: Cursor
+  # Number of edges to return from (and including) last edge.
+  last: PositiveInt
+  # Return results before cursor. When using `before: cusor`, the edge closest to `cursor` will come first in the result edges.
+  before: Cursor
+}
+
+scalar Date
+scalar Cursor
+scalar PositiveInt

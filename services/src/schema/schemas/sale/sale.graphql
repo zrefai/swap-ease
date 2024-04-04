@@ -1,0 +1,70 @@
+extend type Query {
+  salesForToken(
+    contractAddress: String!
+    tokenId: String!
+    pageArgs: PageArgs
+  ): SalesConnection!
+  salesForCluster(clusterId: String!, pageArgs: PageArgs): SalesConnection!
+}
+
+type SalesConnection {
+  edges: [SaleEdge]!
+  pageInfo: PageInfo!
+}
+
+type SaleEdge {
+  node: Sale!
+  cursor: Cursor!
+}
+
+type Sale @key(fields: "contractAddress tokenId") @key(fields: "clusterId") {
+  contractAddress: String!
+  tokenId: String!
+  clusterId: String!
+  saleId: String!
+  orderId: String!
+  txHash: String!
+  fromAddress: String!
+  toAddress: String!
+  block: Int!
+  timestamp: Date!
+  batchId: String
+  createdAt: String
+  feeBreakdown: [SaleFeeBreakdown]
+  fillSource: String
+  marketplaceFeeBps: Int
+  orderKind: String
+  orderSource: String
+  paidFullRoyalty: Boolean
+  price: SalePrice
+  royaltyFeeBps: Int
+  updatedAt: String
+}
+
+type SalePrice {
+  amount: SalePriceAmount
+  currency: SalePriceCurrency
+  netAmount: SalePriceAmount
+}
+
+type SalePriceCurrency {
+  contract: String
+  decimals: Int
+  name: String
+  symbol: String
+}
+
+type SalePriceAmount {
+  decimal: Float
+  native: Float
+  raw: String
+  usd: Float
+}
+
+type SaleFeeBreakdown {
+  bps: Int
+  kind: String
+  rawAmount: String
+  recipient: String
+  source: String
+}

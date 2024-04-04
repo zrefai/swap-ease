@@ -1,0 +1,20 @@
+extend type Query {
+  token(contractAddress: String!, tokenId: String!): Token
+  tokens(contractAddress: String!, tokenIds: [String!]!): [Token]!
+}
+
+type Token @key(fields: "contractAddress tokenId") {
+  contractAddress: String!
+  tokenId: String!
+  name: String
+  image: String
+  rank: Int
+  totalScore: Float
+  attributes: [TokenAttribute]
+}
+
+type TokenAttribute {
+  key: String
+  value: String
+  score: Float
+}

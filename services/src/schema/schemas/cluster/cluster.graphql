@@ -1,0 +1,28 @@
+extend type Query {
+  cluster(id: ID!): Cluster
+  clusters(contractAddress: String!): [Cluster]!
+}
+
+type Cluster @key(fields: "id") @key(fields: "contractAddress") {
+  id: ID!
+  contractAddress: String!
+  createdAt: String
+  updatedAt: String
+  tokenIds: [String!]!
+  rankAverage: Float
+  totalSales: Int
+  totalVolume: Float
+  totalSalesByMarketplace: [SaleByMarketplace]!
+  latestSaleBlockNumber: Int!
+  attributes: [Attribute]!
+}
+
+type Attribute {
+  type: String
+  values: [AttributeValues]
+}
+
+type AttributeValues {
+  type: String
+  count: Int
+}
