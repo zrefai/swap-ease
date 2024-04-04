@@ -1,11 +1,11 @@
-import Websocket, { RawData } from 'ws';
-import { WebsocketSaleResponse } from '@server/models/websocket-sale.response';
-import { clustersCache } from '../..';
-import { mapSale } from './utilities/map-sale';
-import { buildSaleOperation } from './utilities/build-sale-operation';
-import { Sales } from '@server/data/sales';
+import Websocket, { RawData } from "ws";
+import { WebsocketSaleResponse } from "@server/models/websocket-sale.response";
+import { clustersCache } from "../..";
+import { mapSale } from "./utilities/map-sale";
+import { buildSaleOperation } from "./utilities/build-sale-operation";
+import { Sales } from "@server/data/sales";
 
-const ORDER_SOURCE = ['opensea.io', 'blur.io', 'x2y2.io', 'looksrare.org'];
+const ORDER_SOURCE = ["opensea.io", "blur.io", "x2y2.io", "looksrare.org"];
 
 export class WebsocketClient {
   private ws: Websocket;
@@ -19,17 +19,17 @@ export class WebsocketClient {
   }
 
   public connect = () => {
-    this.ws.on('open', () => {
-      console.log('connected');
+    this.ws.on("open", () => {
+      console.log("connected");
       this.subscribe();
     });
 
-    this.ws.on('message', (data: RawData) => {
+    this.ws.on("message", (data: RawData) => {
       this.handleMessage(data);
     });
 
-    this.ws.on('close', () => {
-      console.log('closed');
+    this.ws.on("close", () => {
+      console.log("closed");
       this.connect();
     });
   };
@@ -44,7 +44,7 @@ export class WebsocketClient {
       const operation = buildSaleOperation(
         response.event,
         response.changed,
-        sale
+        sale,
       );
 
       await this.sales.bulkWrite([operation]);
@@ -56,26 +56,26 @@ export class WebsocketClient {
   public subscribe = () => {
     this.ws.send(
       JSON.stringify({
-        type: 'subscribe',
-        event: 'sale.*',
+        type: "subscribe",
+        event: "sale.*",
         filters: {
           orderSource: ORDER_SOURCE,
           contract: clustersCache.getAllContractAddresses(),
         },
-      })
+      }),
     );
   };
 
   public update = () => {
     this.ws.send(
       JSON.stringify({
-        type: 'subscribe',
-        event: 'sale.*',
+        type: "subscribe",
+        event: "sale.*",
         filters: {
           orderSource: ORDER_SOURCE,
           contract: clustersCache.getAllContractAddresses(),
         },
-      })
+      }),
     );
   };
 }

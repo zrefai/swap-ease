@@ -1,6 +1,6 @@
-import { Clusters } from '@server/data/clusters';
-import express from 'express';
-import { clustersCache, wsc } from '..';
+import { Clusters } from "@server/data/clusters";
+import express from "express";
+import { clustersCache, wsc } from "..";
 
 const createServer = (): express.Application => {
   const app = express();
@@ -9,25 +9,25 @@ const createServer = (): express.Application => {
 
   const router = express.Router();
 
-  router.get('/ping', (_req, res) => {
-    return res.send('pong');
+  router.get("/ping", (_req, res) => {
+    return res.send("pong");
   });
 
-  router.get('/getClusterId/:contractAddress/:tokenId', async (req, res) => {
+  router.get("/getClusterId/:contractAddress/:tokenId", async (req, res) => {
     return res
       .status(200)
       .send(
         clustersCache.getClusterId(
           req.params.contractAddress,
-          req.params.tokenId
-        )
+          req.params.tokenId,
+        ),
       );
   });
 
-  router.post('/cacheCollection/:contractAddress', async (req, res) => {
+  router.post("/cacheCollection/:contractAddress", async (req, res) => {
     const clustersData = new Clusters();
     const clusters = await clustersData.getClusterDataForCache(
-      req.params.contractAddress
+      req.params.contractAddress,
     );
 
     for (const cluster of clusters) {

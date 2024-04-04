@@ -1,13 +1,13 @@
-import { definitions } from '@reservoir0x/reservoir-sdk';
+import { definitions } from "@reservoir0x/reservoir-sdk";
 
-export type EventType = 'sale.created' | 'sale.updated' | 'sale.deleted';
+export type EventType = "sale.created" | "sale.updated" | "sale.deleted";
 export type ChangedType =
-  | 'washingTradingScore'
-  | 'fees.royaltyFeeBps'
-  | 'fees.marketplaceFeeBps'
-  | 'fees.royaltyFeeBreakdown'
-  | 'fees.marketplaceFeeBreakdown'
-  | 'fees.paidFullRoyalty';
+  | "washingTradingScore"
+  | "fees.royaltyFeeBps"
+  | "fees.marketplaceFeeBps"
+  | "fees.royaltyFeeBreakdown"
+  | "fees.marketplaceFeeBreakdown"
+  | "fees.paidFullRoyalty";
 
 export interface WebsocketSaleResponse {
   event: EventType;
@@ -19,7 +19,7 @@ export interface WebsocketSaleResponse {
     orderSource: string;
   };
   changed: ChangedType[];
-  data: definitions['Model53'];
+  data: definitions["Model53"];
   offset: string;
   published_at: number;
   type: string;

@@ -1,20 +1,20 @@
-import { Sale } from '@server/models/sale';
-import { ChangedType, EventType } from '@server/models/websocket-sale.response';
-import { AnyBulkWriteOperation } from 'mongodb';
+import { Sale } from "@server/models/sale";
+import { ChangedType, EventType } from "@server/models/websocket-sale.response";
+import { AnyBulkWriteOperation } from "mongodb";
 
 export function buildSaleOperation(
   eventType: EventType,
   changed: ChangedType[],
-  sale: Sale
+  sale: Sale,
 ): AnyBulkWriteOperation<Sale> {
   switch (eventType) {
-    case 'sale.created': {
+    case "sale.created": {
       return createdOpertaion(sale);
     }
-    case 'sale.deleted': {
+    case "sale.deleted": {
       return deletedOperation(sale);
     }
-    case 'sale.updated': {
+    case "sale.updated": {
       return updatedOperation(sale, changed);
     }
   }
@@ -41,7 +41,7 @@ function deletedOperation(sale: Sale): AnyBulkWriteOperation<Sale> {
 
 function updatedOperation(
   sale: Sale,
-  changed: ChangedType[]
+  changed: ChangedType[],
 ): AnyBulkWriteOperation<Sale> {
   return {
     updateOne: {
@@ -63,19 +63,19 @@ function buildUpdateOperation(sale: Sale, changed: ChangedType[]) {
 
   changed.forEach((type) => {
     switch (type) {
-      case 'fees.marketplaceFeeBps': {
+      case "fees.marketplaceFeeBps": {
         partialSale.markeplaceFeeBps = sale.markeplaceFeeBps;
         return;
       }
-      case 'fees.paidFullRoyalty': {
+      case "fees.paidFullRoyalty": {
         partialSale.paidFullRoyalty = sale.paidFullRoyalty;
         return;
       }
-      case 'fees.royaltyFeeBps': {
+      case "fees.royaltyFeeBps": {
         partialSale.royaltyFeeBps = sale.royaltyFeeBps;
         return;
       }
-      case 'fees.royaltyFeeBreakdown' || 'fees.marketplaceFeeBreakdown': {
+      case "fees.royaltyFeeBreakdown" || "fees.marketplaceFeeBreakdown": {
         partialSale.feeBreakdown = sale.feeBreakdown;
       }
     }

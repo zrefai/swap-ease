@@ -1,5 +1,5 @@
-import { Clusters } from '@server/data/clusters';
-import { Cluster } from '@server/models/cluster';
+import { Clusters } from "@server/data/clusters";
+import { Cluster } from "@server/models/cluster";
 
 /**
  * A Cache for all clusters and their tokens.
@@ -58,7 +58,7 @@ export class ClustersCache {
    */
   public getClusterId(
     contractAddress: string,
-    tokenId: string
+    tokenId: string,
   ): string | undefined {
     const tokenMap = this.cache.get(contractAddress);
 
