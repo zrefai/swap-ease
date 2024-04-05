@@ -6,6 +6,9 @@
     "type": "git",
     "url": "git+https://github.com/zrefai/swap-ease.git"
   },
+  "scripts": {
+    "start": "npm run start --workspace=gql-service"
+  },
   "author": "Zaki Refai",
   "license": "ISC",
   "bugs": {
@@ -13,9 +16,8 @@
   },
   "homepage": "https://github.com/zrefai/swap-ease#readme",
   "workspaces": [
-    "add-collection",
-    "sale-ingestor",
-    "services",
-    "gql-service"
+    "services/add-collection",
+    "services/gql-service",
+    "services/sale-ingestor"
   ]
 }

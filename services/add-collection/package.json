@@ -1,6 +1,7 @@
 {
   "name": "add-collection",
   "version": "1.0.0",
+  "description": "Micro-service to process an NFT collection and add it to our DBs.",
   "main": "./src/index.ts",
   "scripts": {
     "clean": "rimraf ./build",
@@ -39,6 +40,5 @@
     "tsconfig-paths": "^4.2.0",
     "tslib": "^2.6.2",
     "typescript": "^5.3.2"
-  },
-  "description": "Micro-service to process an NFT collection and add it to our DBs."
+  }
 }
