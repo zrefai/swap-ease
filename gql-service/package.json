@@ -1,17 +1,8 @@
 {
-  "name": "swap-ease-services",
+  "name": "gql-service",
   "private": true,
   "description": "A template for TypeScript projects with pre-configured tooling",
-  "version": "0.0.0",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/apollographql/subgraph-template-typescript-apollo-server"
-  },
-  "homepage": "https://github.com/apollographql/subgraph-template-typescript-apollo-server#readme",
-  "bugs": {
-    "url": "https://github.com/apollographql/subgraph-template-typescript-apollo-server/issues"
-  },
+  "version": "1.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
@@ -60,5 +51,7 @@
         "verbose": true
       }
     }
-  }
+  },
+  "author": "Zaki Refai",
+  "license": "ISC"
 }

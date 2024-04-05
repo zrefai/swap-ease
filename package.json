@@ -1,0 +1,21 @@
+{
+  "name": "swap-ease",
+  "version": "1.0.0",
+  "description": "Mono-repo for all the components of the swap-ease project",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zrefai/swap-ease.git"
+  },
+  "author": "Zaki Refai",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zrefai/swap-ease/issues"
+  },
+  "homepage": "https://github.com/zrefai/swap-ease#readme",
+  "workspaces": [
+    "add-collection",
+    "sale-ingestor",
+    "services",
+    "gql-service"
+  ]
+}
