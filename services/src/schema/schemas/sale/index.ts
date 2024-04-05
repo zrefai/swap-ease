@@ -1,4 +1,4 @@
-import { getPaginatedResponse } from '../../../schema/utils/get-paginated-response';
+import { getPaginatedResponse } from '../../utils/get-paginated-response';
 import {
   Resolvers,
   Sale,
