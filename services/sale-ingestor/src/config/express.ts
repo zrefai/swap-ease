@@ -1,6 +1,7 @@
-import { Clusters } from "@server/data/clusters";
-import express from "express";
-import { clustersCache, wsc } from "..";
+import express from 'express';
+import { clustersCache, wsc } from '..';
+import { Clusters } from 'swap-ease-data';
+import { db } from './db-client';
 
 const createServer = (): express.Application => {
   const app = express();
@@ -9,11 +10,11 @@ const createServer = (): express.Application => {
 
   const router = express.Router();
 
-  router.get("/ping", (_req, res) => {
-    return res.send("pong");
+  router.get('/ping', (_req, res) => {
+    return res.send('pong');
   });
 
-  router.get("/getClusterId/:contractAddress/:tokenId", async (req, res) => {
+  router.get('/getClusterId/:contractAddress/:tokenId', async (req, res) => {
     return res
       .status(200)
       .send(
@@ -24,8 +25,8 @@ const createServer = (): express.Application => {
       );
   });
 
-  router.post("/cacheCollection/:contractAddress", async (req, res) => {
-    const clustersData = new Clusters();
+  router.post('/cacheCollection/:contractAddress', async (req, res) => {
+    const clustersData = new Clusters(db);
     const clusters = await clustersData.getClusterDataForCache(
       req.params.contractAddress,
     );

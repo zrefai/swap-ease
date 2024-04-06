@@ -1,53 +1,47 @@
-import { definitions } from "@reservoir0x/reservoir-sdk";
-import { clustersCache } from "@server/index";
-import {
-  Amount,
-  Currency,
-  FeeBreakdown,
-  Price,
-  Sale,
-} from "@server/models/sale";
-import { WebsocketSaleResponse } from "@server/models/websocket-sale.response";
-import assert from "assert";
+import { definitions } from '@reservoir0x/reservoir-sdk';
+import { clustersCache } from '@server/index';
+import { Amount, Currency, FeeBreakdown, Price, Sale } from 'swap-ease-data';
+import { WebsocketSaleResponse } from '@server/models/websocket-sale.response';
+import assert from 'assert';
 
 export function mapSale(response: WebsocketSaleResponse): Sale {
   const sale = response.data;
 
   const saleId = sale.saleId;
-  assert(saleId, "SaleId was not in the response");
+  assert(saleId, 'SaleId was not in the response');
 
   const orderId = sale.orderId;
-  assert(orderId, "OrderId was not in the response");
+  assert(orderId, 'OrderId was not in the response');
 
   const txHash = sale.txHash;
-  assert(txHash, "TxHash was not in the response");
+  assert(txHash, 'TxHash was not in the response');
 
   const block = sale.block;
-  assert(block, "Block was not in the response");
+  assert(block, 'Block was not in the response');
 
   const timestamp = sale.timestamp;
-  assert(timestamp, "Timestamp was not in the response");
+  assert(timestamp, 'Timestamp was not in the response');
 
   const contractAddress = sale.token?.contract;
-  assert(contractAddress, "Contract address was not in the response");
+  assert(contractAddress, 'Contract address was not in the response');
 
   const tokenId = sale.token?.tokenId;
-  assert(tokenId, "TokenId was not in the response");
+  assert(tokenId, 'TokenId was not in the response');
 
   const orderSource = sale.orderSource;
-  assert(orderSource, "Order source was not in the response");
+  assert(orderSource, 'Order source was not in the response');
 
   const orderKind = sale.orderKind;
-  assert(orderKind, "Order kind was not in the response");
+  assert(orderKind, 'Order kind was not in the response');
 
   const fillSource = sale.fillSource;
-  assert(fillSource, "Fill source was not in the response");
+  assert(fillSource, 'Fill source was not in the response');
 
   const fromAddress = sale.from;
-  assert(fromAddress, "From address was not in the response");
+  assert(fromAddress, 'From address was not in the response');
 
   const toAddress = sale.to;
-  assert(toAddress, "To address kind was not in the response");
+  assert(toAddress, 'To address kind was not in the response');
 
   const clusterId = clustersCache.getClusterId(contractAddress, tokenId);
   assert(
@@ -79,7 +73,7 @@ export function mapSale(response: WebsocketSaleResponse): Sale {
   };
 }
 
-function mapPrice(price?: definitions["price"]): Price {
+function mapPrice(price?: definitions['price']): Price {
   return {
     currency: mapCurrency(price?.currency),
     amount: mapAmount(price?.amount),
@@ -87,12 +81,12 @@ function mapPrice(price?: definitions["price"]): Price {
   };
 }
 
-function mapAmount(amount?: definitions["amount"]): Amount {
+function mapAmount(amount?: definitions['amount']): Amount {
   const raw = amount?.raw;
-  assert(raw, "Raw was not available in the response");
+  assert(raw, 'Raw was not available in the response');
 
   const decimal = amount?.decimal;
-  assert(decimal, "Decimal was not available in the response");
+  assert(decimal, 'Decimal was not available in the response');
 
   return {
     raw,
@@ -101,9 +95,9 @@ function mapAmount(amount?: definitions["amount"]): Amount {
   };
 }
 
-function mapCurrency(currency?: definitions["currency"]): Currency {
+function mapCurrency(currency?: definitions['currency']): Currency {
   const contract = currency?.contract;
-  assert(contract, "Contract was not in the response");
+  assert(contract, 'Contract was not in the response');
   return {
     contract,
     name: currency?.name,
@@ -113,7 +107,7 @@ function mapCurrency(currency?: definitions["currency"]): Currency {
 }
 
 function mapFeeBreakdown(
-  feeBreakdown?: definitions["Model52"],
+  feeBreakdown?: definitions['Model57'],
 ): FeeBreakdown[] | undefined {
   return feeBreakdown?.map((fee) => ({
     kind: fee.kind,

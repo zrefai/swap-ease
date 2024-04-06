@@ -1,5 +1,5 @@
-import { Clusters } from "@server/data/clusters";
-import { Cluster } from "@server/models/cluster";
+import { db } from '@server/config/db-client';
+import { Cluster, Clusters } from 'swap-ease-data';
 
 /**
  * A Cache for all clusters and their tokens.
@@ -13,7 +13,7 @@ export class ClustersCache {
 
   constructor() {
     this.cache = new Map<string, Map<string, string>>();
-    this.clusters = new Clusters();
+    this.clusters = new Clusters(db);
   }
 
   /**

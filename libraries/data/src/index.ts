@@ -7,6 +7,10 @@ export {
   Attribute,
   AttributeValue,
   Sale,
+  Currency,
+  Amount,
+  Price,
+  FeeBreakdown,
   Token,
   TokenAttribute,
 } from './models';

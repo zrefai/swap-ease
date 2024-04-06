@@ -1,14 +1,14 @@
-import { MongoClient } from "mongodb";
+import { MongoClient } from 'mongodb';
 // import { WebsocketClient } from './config/websocket-client';
-import { createServer } from "@server/config/express";
-import dbClient from "@server/config/db-client";
-import { ClustersCache } from "@server/utilities/clusters-cache";
-import { WebsocketClient } from "./config/websocket/websocket-client";
+import { createServer } from '@server/config/express';
+import dbClient from '@server/config/db-client';
+import { ClustersCache } from '@server/utilities/clusters-cache';
+import { WebsocketClient } from './config/websocket/websocket-client';
 
 export const clustersCache = new ClustersCache();
 
 // TODO: update with Websocket URL from Reservoir once purchased
-export const wsc = new WebsocketClient("");
+export const wsc = new WebsocketClient('');
 
 const port = process.env.PORT || 8000;
 
@@ -16,10 +16,10 @@ async function startServer(db: MongoClient) {
   const app = createServer();
 
   app.listen(port, () => {
-    console.log("Server is running on port", port);
+    console.log('Server is running on port', port);
   });
 
-  const signalTraps: NodeJS.Signals[] = ["SIGTERM", "SIGINT", "SIGUSR2"];
+  const signalTraps: NodeJS.Signals[] = ['SIGTERM', 'SIGINT', 'SIGUSR2'];
 
   signalTraps.forEach((type) => {
     process.on(type, () => {
@@ -33,9 +33,9 @@ async function startServer(db: MongoClient) {
 
 dbClient
   .then(async (v) => {
-    console.log("DB client connected");
+    console.log('DB client connected');
     await clustersCache.fillCache();
-    console.log("Cache filled");
+    console.log('Cache filled');
     startServer(v);
     wsc.connect();
   })
