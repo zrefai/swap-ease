@@ -1,6 +1,6 @@
-import { AddCollection } from "@server/handlers/collections/add-collection.handler";
-import amqp from "amqplib";
-import dotenv from "dotenv";
+import { AddCollection } from '@server/handlers/collections/add-collection.handler';
+import amqp from 'amqplib';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -9,8 +9,8 @@ export interface MQMessage {
 }
 
 const RABBIT_MQ_URL = process.env.RABBIT_MQ_URL as string;
-const ADD_COLLECTION_QUEUE = "addresses_for_adding";
-const CLUSTERING_QUEUE = "addresses_for_clustering";
+const ADD_COLLECTION_QUEUE = 'addresses_for_adding';
+const CLUSTERING_QUEUE = 'addresses_for_clustering';
 let mqConnection: amqp.Connection | null;
 
 export async function consumeAndProduce() {
@@ -28,7 +28,7 @@ export async function consumeAndProduce() {
     channel.consume(ADD_COLLECTION_QUEUE, async (msg) => {
       if (msg !== null) {
         const address = JSON.parse(msg.content.toString()).address;
-        console.log("Received messaged:", address);
+        console.log('Received messaged:', address);
 
         // Run add collection handler
         await controller.handler(address);
@@ -48,7 +48,7 @@ export async function consumeAndProduce() {
   }
 }
 
-process.on("exit", async () => {
+process.on('exit', async () => {
   if (mqConnection) {
     await mqConnection.close();
   }

@@ -1,5 +1,5 @@
-import { Token } from "@server/models/token";
-import { Double } from "mongodb";
+import { Double } from 'mongodb';
+import { Token } from 'swap-ease-data';
 
 /**
  * Calculates the scores of all tokens provided so that they can be accurately ranked. Modifies the tokens array in memory to accomplish this by adding the necessary details to each token and their list of attributes.
@@ -41,14 +41,14 @@ export function calculateScores(
           (attributeType) => !currentAttributeTypes.includes(attributeType),
         )
         .forEach((attributeType) => {
-          if (attributeType === "attribute_count") {
+          if (attributeType === 'attribute_count') {
             const rarityScoreNumTraits =
               1 /
               (attributes.attribute_count[currentAttributesLength] /
                 totalSupply);
             // Push attribute for number of attributes (i.e attribute_count)
             currentAttributes.push({
-              key: "attribute_count",
+              key: 'attribute_count',
               kind: undefined,
               value: currentAttributesLength,
               score: new Double(rarityScoreNumTraits),

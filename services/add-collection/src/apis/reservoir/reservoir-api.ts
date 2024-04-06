@@ -9,7 +9,7 @@ export class ReservoirAPI {
 
   async fetch(url: URL, init?: RequestInit) {
     const options = {
-      headers: { accept: "*/*", "x-api-key": this.apiKey },
+      headers: { accept: '*/*', 'x-api-key': this.apiKey },
       ...init,
     };
 

@@ -1,9 +1,9 @@
-import { definitions } from "@reservoir0x/reservoir-sdk";
-import { Attribute, Token } from "@server/models/token";
-import assert from "assert";
+import { definitions } from '@reservoir0x/reservoir-sdk';
+import assert from 'assert';
+import { Token, Attribute } from 'swap-ease-data';
 
-export function mapToken(token: definitions["Model98"]): Token {
-  assert(token.token, "Token information is undefined");
+export function mapToken(token: definitions['Model98']): Token {
+  assert(token.token, 'Token information is undefined');
 
   return {
     contractAddress: token.token.contract,
@@ -16,9 +16,9 @@ export function mapToken(token: definitions["Model98"]): Token {
   };
 }
 
-function mapAttributes(attributes: definitions["Model96"]): Attribute[] {
+function mapAttributes(attributes: definitions['Model96']): Attribute[] {
   return attributes.map((attribute) => {
-    assert(attribute.key, "Key on attribute is undefined");
+    assert(attribute.key, 'Key on attribute is undefined');
 
     return {
       key: attribute.key,

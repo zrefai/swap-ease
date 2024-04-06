@@ -1,6 +1,6 @@
-import { AuditModel } from "@server/data/audit-model";
+import { Audit } from './audit';
 
-export interface Collection extends AuditModel {
+export interface Collection extends Audit {
   id: string;
   totalSupply: string;
   name?: string;

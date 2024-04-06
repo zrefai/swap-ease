@@ -1,9 +1,9 @@
-import { definitions } from "@reservoir0x/reservoir-sdk";
-import { Collection } from "@server/models/collection";
-import assert from "assert";
+import { definitions } from '@reservoir0x/reservoir-sdk';
+import assert from 'assert';
+import { Collection } from 'swap-ease-data';
 
 export function mapCollection(
-  collection: definitions["Model37"],
+  collection: definitions['Model37'],
   contractAddress: string,
 ): Collection {
   const id = collection.id;
@@ -19,7 +19,7 @@ export function mapCollection(
   );
 
   assert(
-    collection.contractKind && collection.contractKind === "erc721",
+    collection.contractKind && collection.contractKind === 'erc721',
     `Token type was not available or was not an ERC721 contract for address: ${contractAddress}`,
   );
 

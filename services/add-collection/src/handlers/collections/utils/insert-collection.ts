@@ -1,25 +1,22 @@
-import { client } from "@server/config/db-client";
-import { Collections } from "@server/data/collections";
-import { Tokens } from "@server/data/tokens";
-import { Collection } from "@server/models/collection";
-import { Token } from "@server/models/token";
+import { client, db } from '@server/config/db-client';
+import { Collection, Collections, Token, Tokens } from 'swap-ease-data';
 
 export async function insertCollection(
   rankedTokens: Token[],
   collection: Collection,
 ) {
   const session = client.startSession();
-  const collectionsData = new Collections();
-  const tokensData = new Tokens();
+  const collectionsData = new Collections(db);
+  const tokensData = new Tokens(db);
 
   try {
     await session.withTransaction(async () => {
       await collectionsData.insertOne(collection, session);
       await tokensData.insertMany(rankedTokens, session);
     });
-    console.log("Transaction committed");
+    console.log('Transaction committed');
   } catch (error) {
-    console.error("Transaction failed:", error);
+    console.error('Transaction failed:', error);
 
     // Abort the transaction
     session.abortTransaction();

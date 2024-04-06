@@ -1,5 +1,5 @@
-import assert from "assert";
-import { Attribute, Token } from "src/models/token";
+import assert from 'assert';
+import { Attribute, Token } from 'swap-ease-data';
 
 export function aggregateAttributeData(tokens: Token[]) {
   const attributeTypes = new Set();
@@ -48,7 +48,7 @@ export function aggregateAttributeData(tokens: Token[]) {
     }
 
     const currentAttributeTypes = currentAttributes.map((att: Attribute) => {
-      assert(att.key, "Key was undefined for the attribute");
+      assert(att.key, 'Key was undefined for the attribute');
       return att.key;
     });
 

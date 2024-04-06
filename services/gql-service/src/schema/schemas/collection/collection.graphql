@@ -16,7 +16,7 @@ type Collection @key(fields: "id") {
   discordUrl: String
   twitterUrl: String
   externalUrl: String
-  createdAt: Date!
-  updatedAt: Date!
+  createdAt: Date
+  updatedAt: Date
   attributes: [Attribute]
 }

@@ -18,6 +18,7 @@
   "workspaces": [
     "services/add-collection",
     "services/gql-service",
-    "services/sale-ingestor"
+    "services/sale-ingestor",
+    "libraries/data"
   ]
 }

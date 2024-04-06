@@ -1,4 +1,4 @@
-import { Token } from "@server/models/token";
+import { Token } from 'swap-ease-data';
 
 export function mergeSortTokensByScore(tokens: Token[]) {
   const copyArray = [...tokens];

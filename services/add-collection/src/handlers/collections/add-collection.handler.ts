@@ -1,17 +1,12 @@
-import assert from "assert";
-import { aggregateAttributeData } from "./utils/aggregate-attribute-data";
-import { Collections } from "src/data/collections";
-import { Collections as ReservoirCollections } from "src/apis/reservoir/collections/collections";
-import { Tokens } from "src/apis/reservoir/tokens/tokens";
-import { calculateScores } from "./utils/calculate-scores";
-import { mergeSortTokensByScore } from "./utils/merge-sort-tokens-by-score";
-import { insertCollection } from "./utils/insert-collection";
-
-// TODO: When adding the nfts to the DB, create a compound index on contractAddress, clusterId, tokenId, and rank.
-// TODO: Reformat collection attributes document to be in line with schema
-// TODO: contractAddress in collection needs to be renamed to ID
-// TODO: change audit model to be createdAt and updatedAt
-// This way we can do performant queries on these four fields together
+import assert from 'assert';
+import { aggregateAttributeData } from './utils/aggregate-attribute-data';
+import { Collections as ReservoirCollections } from 'src/apis/reservoir/collections/collections';
+import { Tokens } from 'src/apis/reservoir/tokens/tokens';
+import { calculateScores } from './utils/calculate-scores';
+import { mergeSortTokensByScore } from './utils/merge-sort-tokens-by-score';
+import { insertCollection } from './utils/insert-collection';
+import { Collections } from 'swap-ease-data';
+import { db } from '@server/config/db-client';
 
 export class AddCollection {
   private collections: Collections;
@@ -19,7 +14,7 @@ export class AddCollection {
   private reservoirCollections: ReservoirCollections;
 
   constructor() {
-    this.collections = new Collections();
+    this.collections = new Collections(db);
     this.tokens = new Tokens();
     this.reservoirCollections = new ReservoirCollections();
   }
@@ -33,7 +28,7 @@ export class AddCollection {
     const collectionData = await this.collections.findOne(contractAddress);
 
     if (collectionData) {
-      throw new Error("Collection already exists");
+      throw new Error('Collection already exists');
     }
 
     const collection =
