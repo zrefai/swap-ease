@@ -1,8 +1,11 @@
+import dotenv from 'dotenv';
 import './config/rabbit-mq-client';
-import { verifyEnvVariables } from './utils/verify-env-variables';
 import dbClient from './config/db-client';
+import { verifyEnvVariables } from 'swap-ease-utils';
 // import { consumeAndProduce } from './config/rabbit-mq-client';
 // import { AddCollection } from "./handlers/collections/add-collection.handler";
+
+dotenv.config();
 
 verifyEnvVariables([
   'RABBIT_MQ_URL',

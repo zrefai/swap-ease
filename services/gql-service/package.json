@@ -27,7 +27,8 @@
     "graphql": "latest",
     "graphql-tag": "latest",
     "mongodb": "^6.5.0",
-    "swap-ease-data": "file:../../libraries/data"
+    "swap-ease-data": "file:../../libraries/data",
+    "swap-ease-utils": "file:../../libraries/utils"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.0",

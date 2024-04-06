@@ -2,7 +2,7 @@ import { MongoClient } from 'mongodb';
 // import { WebsocketClient } from './config/websocket-client';
 import { createServer } from '@server/config/express';
 import dbClient from '@server/config/db-client';
-import { ClustersCache } from '@server/utilities/clusters-cache';
+import { ClustersCache } from '@server/utils/clusters-cache';
 import { WebsocketClient } from './config/websocket/websocket-client';
 
 export const clustersCache = new ClustersCache();

@@ -19,6 +19,7 @@
     "services/add-collection",
     "services/gql-service",
     "services/sale-ingestor",
-    "libraries/data"
+    "libraries/data",
+    "libraries/utils"
   ]
 }
