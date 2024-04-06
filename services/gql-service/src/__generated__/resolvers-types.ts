@@ -37,7 +37,7 @@ export type Cluster = {
   __typename?: 'Cluster';
   attributes: Array<Maybe<Attribute>>;
   contractAddress: Scalars['String']['output'];
-  createdAt?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['Date']['output']>;
   id: Scalars['ID']['output'];
   latestSaleBlockNumber: Scalars['Int']['output'];
   rankAverage?: Maybe<Scalars['Float']['output']>;
@@ -45,7 +45,7 @@ export type Cluster = {
   totalSales?: Maybe<Scalars['Int']['output']>;
   totalSalesByMarketplace: Array<Maybe<SaleByMarketplace>>;
   totalVolume?: Maybe<Scalars['Float']['output']>;
-  updatedAt?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['Date']['output']>;
 };
 
 export type ClustersAggregate = {
@@ -62,7 +62,7 @@ export type ClustersAggregate = {
 export type Collection = {
   __typename?: 'Collection';
   attributes?: Maybe<Array<Maybe<Attribute>>>;
-  createdAt: Scalars['Date']['output'];
+  createdAt?: Maybe<Scalars['Date']['output']>;
   discordUrl?: Maybe<Scalars['String']['output']>;
   externalUrl?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
@@ -71,7 +71,7 @@ export type Collection = {
   symbol?: Maybe<Scalars['String']['output']>;
   totalSupply: Scalars['String']['output'];
   twitterUrl?: Maybe<Scalars['String']['output']>;
-  updatedAt: Scalars['Date']['output'];
+  updatedAt?: Maybe<Scalars['Date']['output']>;
 };
 
 export type Mutation = {
@@ -171,7 +171,7 @@ export type Sale = {
   block: Scalars['Int']['output'];
   clusterId: Scalars['String']['output'];
   contractAddress: Scalars['String']['output'];
-  createdAt?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['Date']['output']>;
   feeBreakdown?: Maybe<Array<Maybe<SaleFeeBreakdown>>>;
   fillSource?: Maybe<Scalars['String']['output']>;
   fromAddress: Scalars['String']['output'];
@@ -187,7 +187,7 @@ export type Sale = {
   toAddress: Scalars['String']['output'];
   tokenId: Scalars['String']['output'];
   txHash: Scalars['String']['output'];
-  updatedAt?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['Date']['output']>;
 };
 
 export type SaleByMarketplace = {
@@ -427,7 +427,7 @@ export type ClusterResolvers<ContextType = DataSourceContext, ParentType extends
   __resolveReference?: ReferenceResolver<Maybe<ResolversTypes['Cluster']>, { __typename: 'Cluster' } & (GraphQLRecursivePick<ParentType, {"id":true}> | GraphQLRecursivePick<ParentType, {"contractAddress":true}>), ContextType>;
   attributes?: Resolver<Array<Maybe<ResolversTypes['Attribute']>>, ParentType, ContextType>;
   contractAddress?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   latestSaleBlockNumber?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   rankAverage?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
@@ -435,7 +435,7 @@ export type ClusterResolvers<ContextType = DataSourceContext, ParentType extends
   totalSales?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   totalSalesByMarketplace?: Resolver<Array<Maybe<ResolversTypes['SaleByMarketplace']>>, ParentType, ContextType>;
   totalVolume?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  updatedAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -454,7 +454,7 @@ export type ClustersAggregateResolvers<ContextType = DataSourceContext, ParentTy
 export type CollectionResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Collection'] = ResolversParentTypes['Collection']> = ResolversObject<{
   __resolveReference?: ReferenceResolver<Maybe<ResolversTypes['Collection']>, { __typename: 'Collection' } & GraphQLRecursivePick<ParentType, {"id":true}>, ContextType>;
   attributes?: Resolver<Maybe<Array<Maybe<ResolversTypes['Attribute']>>>, ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   discordUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   externalUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
@@ -463,7 +463,7 @@ export type CollectionResolvers<ContextType = DataSourceContext, ParentType exte
   symbol?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   totalSupply?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   twitterUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  updatedAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -517,7 +517,7 @@ export type SaleResolvers<ContextType = DataSourceContext, ParentType extends Re
   block?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   clusterId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   contractAddress?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   feeBreakdown?: Resolver<Maybe<Array<Maybe<ResolversTypes['SaleFeeBreakdown']>>>, ParentType, ContextType>;
   fillSource?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   fromAddress?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -533,7 +533,7 @@ export type SaleResolvers<ContextType = DataSourceContext, ParentType extends Re
   toAddress?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   tokenId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   txHash?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  updatedAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 

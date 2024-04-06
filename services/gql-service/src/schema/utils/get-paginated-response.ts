@@ -6,10 +6,10 @@ import assert from 'assert';
 const QUERY_LIMIT = 21;
 const PAGE_LIMIT = 20;
 
-export const getPaginatedResponse = async <T, K, S>(
+export const getPaginatedResponse = async <T, K, H, S>(
   args: K,
   collection: Collection<T>,
-  mapFn: (doc: WithId<T>) => T,
+  mapFn: (doc: WithId<T>) => H,
   pageArgs?: PageArgs
 ) => {
   validatePageArgs(pageArgs);
@@ -140,9 +140,9 @@ const hasNextPage = async <T, K>(
   return false;
 };
 
-const mapEdges = <T>(
+const mapEdges = <T, H>(
   documents: WithId<T>[],
-  mapFn: (doc: WithId<T>) => T,
+  mapFn: (doc: WithId<T>) => H,
   pageArgs?: PageArgs
 ) => {
   let index = 0;

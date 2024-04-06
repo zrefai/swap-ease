@@ -1,9 +1,11 @@
 import { getPaginatedResponse } from '../../utils/get-paginated-response';
 import {
   Resolvers,
-  Sale,
+  Sale as GQLSale,
   SalesConnection,
 } from '../../../__generated__/resolvers-types';
+import { Sale } from 'swap-ease-data';
+import { mapSale } from './mappers/map-sale';
 
 export const saleResolvers: Resolvers = {
   Query: {
@@ -12,17 +14,17 @@ export const saleResolvers: Resolvers = {
       { contractAddress, tokenId, pageArgs },
       context
     ) =>
-      await getPaginatedResponse<Sale, any, SalesConnection>(
+      await getPaginatedResponse<Sale, any, GQLSale, SalesConnection>(
         { contractAddress, tokenId },
         context.dataSources.sales.sales,
-        (doc) => doc as Sale,
+        mapSale,
         pageArgs
       ),
     salesForCluster: async (_parent, { clusterId, pageArgs }, context) =>
-      await getPaginatedResponse<Sale, any, SalesConnection>(
+      await getPaginatedResponse<Sale, any, GQLSale, SalesConnection>(
         { clusterId },
         context.dataSources.sales.sales,
-        (doc) => doc as Sale,
+        mapSale,
         pageArgs
       ),
   },

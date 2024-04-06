@@ -1,8 +1,11 @@
-import { Tokens } from '../data/tokens';
-import { Clusters } from '../data/clusters';
-import { ClustersAggregates } from '../data/clustersAggregates';
-import { Collections } from '../data/collections';
-import { Sales } from '../data/sales';
+import { db } from '../config/db-client';
+import {
+  Clusters,
+  ClustersAggregates,
+  Collections,
+  Sales,
+  Tokens,
+} from 'swap-ease-data';
 
 //This interface is used with graphql-codegen to generate types for resolvers context
 export interface DataSourceContext {
@@ -18,10 +21,10 @@ export interface DataSourceContext {
 
 export const dataSourceContext: DataSourceContext = {
   dataSources: {
-    collections: new Collections(),
-    clustersAggregates: new ClustersAggregates(),
-    clusters: new Clusters(),
-    tokens: new Tokens(),
-    sales: new Sales(),
+    collections: new Collections(db),
+    clustersAggregates: new ClustersAggregates(db),
+    clusters: new Clusters(db),
+    tokens: new Tokens(db),
+    sales: new Sales(db),
   },
 };

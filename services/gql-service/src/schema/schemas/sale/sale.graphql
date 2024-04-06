@@ -29,7 +29,7 @@ type Sale @key(fields: "contractAddress tokenId") @key(fields: "clusterId") {
   block: Int!
   timestamp: Date!
   batchId: String
-  createdAt: String
+  createdAt: Date
   feeBreakdown: [SaleFeeBreakdown]
   fillSource: String
   marketplaceFeeBps: Int
@@ -38,7 +38,7 @@ type Sale @key(fields: "contractAddress tokenId") @key(fields: "clusterId") {
   paidFullRoyalty: Boolean
   price: SalePrice
   royaltyFeeBps: Int
-  updatedAt: String
+  updatedAt: Date
 }
 
 type SalePrice {

@@ -4,9 +4,11 @@ export {
   Cluster,
   ClustersAggregate,
   Collection,
+  Attribute,
+  AttributeValue,
   Sale,
   Token,
-  Attribute,
+  TokenAttribute,
 } from './models';
 
 // Data functions and classes

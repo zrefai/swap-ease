@@ -5,12 +5,12 @@ export interface Token {
   tokenId: string;
   name?: string;
   image?: string;
-  attributes: Attribute[];
+  attributes: TokenAttribute[];
   totalScore?: number;
   rank?: number;
 }
 
-export interface Attribute {
+export interface TokenAttribute {
   key: string;
   kind?: string;
   value: string;

@@ -6,8 +6,8 @@ extend type Query {
 type Cluster @key(fields: "id") @key(fields: "contractAddress") {
   id: ID!
   contractAddress: String!
-  createdAt: String
-  updatedAt: String
+  createdAt: Date
+  updatedAt: Date
   tokenIds: [String!]!
   rankAverage: Float
   totalSales: Int
