@@ -1,4 +1,25 @@
-# Aggregator processes
+# Sale Ingestor
+
+This is a component of the swap-ease mono-repo. It is a service that processes new trading activity for a collection. Each new sale is stored in a specific manner, which is detailed below. It will specifically perform these actions:
+
+- Read new trading activity
+- Determine if the sale belongs to a collection that is tracked
+- Make the necessary changes to the sale document
+- Aggregate the sale data within the cluster it resides in and the clustersAggregate document.
+
+# Getting started
+
+## Environment variables
+
+Create a `.env` file and copy and paste the below into that file. Replace the links with the actual environment variable value.
+
+```
+MONGO_DB_NAME=swapEase
+MONGO_DB_CONNECTION_STRING=[Go here](https://cloud.mongodb.com/v2/63126bef095c44751357180b#/overview?connectCluster=Cluster0)
+RESERVOIR_WEBSOCKET_URL=
+```
+
+# Operations
 
 Sales will come from the Websocket/Ingestor service. These are the events present from the websocket:
 
@@ -6,56 +27,27 @@ Sales will come from the Websocket/Ingestor service. These are the events presen
 - `sale.update`
 - `sale.deleted`
 
-Be aware that there could be duplicate Sales because normally it can be represented through a buyer side and a seller side. Some filtering may need to occure so that we dont run into a duplicate Sale, but from different perspectives (i.e BUYER or SELLER).
-
-## Aggregation of items to be deleted
-
-When retrieving `collections` and `clusters` documents, we can also get a list of the sales for a collection that are about to expire (i.e sales that exist on the 90th day). These sales have time stamps we can use to determine exactly when to remove them from the from the aggregate values of the documents above.
-
-When new operations come in from the websocket service, we can check this array of expiring sales and determine if a sale needs to be de-aggregated.
-
-### Handling `sale.expired` operation
-
-When a sale in the "sales about to expire" cache goes past the 90 day boundary, we perform these general actions:
-
-- Update the `collectionClustersMetadata` document for the associated `contractAddress` where applicable:
-  - Update `lastUpdated` field with new date
-  - Update `lowestSale` field if current value is the lowest value. Need to find next lowest value
-  - Update `highestSale` field if the current value is the highest value. Need to find the next highest value
-  - Decrement `totalSales` field by 1
-  - Decrement `totalVolume` field by ETH value in sale
-  - Update `totalSalesByMarketplace` object by decrementing the counter, for the domain the sale occurred in, by 1
-- Update the `cluster` document for the associated `contractAddress` where applicable:
-  - Update `lastUpdated` field with new date
-  - Update `lowestSale` field if current value is the lowest value. Need to find next lowest value
-  - Update `highestSale` field if the current value is the highest value. Need to find the next highest value
-  - Decrement `totalSales` field by 1
-  - Decrement `totalVolume` field by ETH value in sale
-  - Update `totalSalesByMarketplace` object by decrementing the counter, for the domain the sale occurred in, by 1
+Be aware that there could be duplicate Sales because normally it can be represented through a buyer side and a seller side. Some filtering may need to occur so that we dont run into a duplicate Sale, but from different perspectives (i.e BUYER or SELLER).
 
 ## Handling operations
 
 When we perform any operation, we perform these general actions:
 
-- Update the `collectionClustersMetadata` document for the associated `contractAddress`
+- Update the `clustersAggregate` document for the associated `contractAddress`
 - Update the `cluster` document for the associated `contractAddress`
-- Update the `sales` collection with the appropriate action (i.e `add`, `update`, or `delete`)
+- Update the `sales` collection or `sale` document with the appropriate action (i.e `add`, `update`, or `delete`)
 
 ### Handling `sale.created` operations
 
 For `sale.created` operation, we perform these specific actions:
 
-- Update the `collectionClustersMetadata` document for the associated `contractAddress` where applicable:
-  - Update `lastUpdated` field with new date
-  - Update `lowestSale` field if it is lower than current value
-  - Update `highestSale` field if it is higher than current value
+- Update the `clustersAggregate` document for the associated `contractAddress` where applicable:
+  - Update `updatedAt` field with new date
   - Increment `totalSales` field by 1
   - Increment `totalVolume` field by ETH value in sale
   - Update `totalSalesByMarketplace` object by incrementing the counter, for the domain the sale occurred in, by 1
 - Update the `cluster` document for the associated `contractAddress` where applicable:
-  - Update `lastUpdated` field with new date
-  - Update `lowestSale` field if it is lower than current value
-  - Update `highestSale` field if it is higher than current value
+  - Update `updatedAt` field with new date
   - Increment `totalSales` field by 1
   - Increment `totalVolume` field by ETH value in sale
   - Update `totalSalesByMarketplace` object by incrementing the counter, for the domain the sale occurred in, by 1
@@ -72,17 +64,13 @@ For `sale.updated` operation, we perform these specific actions:
 
 For `sale.deleted` operation, we perform these specific actions:
 
-- Update the `collectionClustersMetadata` document for the associated `contractAddress` where applicable:
-  - Update `lastUpdated` field with new date
-  - Update `lowestSale` field if current value is the lowest value. Need to find next lowest value
-  - Update `highestSale` field if the current value is the highest value. Need to find the next highest value
+- Update the `clustersAggregate` document for the associated `contractAddress` where applicable:
+  - Update `updatedAt` field with new date
   - Decrement `totalSales` field by 1
   - Decrement `totalVolume` field by ETH value in sale
   - Update `totalSalesByMarketplace` object by decrementing the counter, for the domain the sale occurred in, by 1
 - Update the `cluster` document for the associated `contractAddress` where applicable:
-  - Update `lastUpdated` field with new date
-  - Update `lowestSale` field if current value is the lowest value. Need to find next lowest value
-  - Update `highestSale` field if the current value is the highest value. Need to find the next highest value
+  - Update `updatedAt` field with new date
   - Decrement `totalSales` field by 1
   - Decrement `totalVolume` field by ETH value in sale
   - Update `totalSalesByMarketplace` object by decrementing the counter, for the domain the sale occurred in, by 1
@@ -91,4 +79,4 @@ For `sale.deleted` operation, we perform these specific actions:
 
 # Processes and structures
 
-We need to be able to treat a set of operations that exist for the same collection as a whole operation. For example, operation A for contract address C modifies the necessary documents. Operation B has the same contract address C also modifies the necessary documents. The order of operations on the necessary documents should, based on the timestamp, occur as A -> B: A modifies the document first, then B modifies the document after A.
+We will always retrieve only 1 sale from the webhook. We need to perform the above actions on a per sale basis.

@@ -1,9 +1,19 @@
 import { MongoClient } from 'mongodb';
-// import { WebsocketClient } from './config/websocket-client';
+import dotenv from 'dotenv';
 import { createServer } from '@server/config/express';
 import dbClient from '@server/config/db-client';
 import { ClustersCache } from '@server/utils/clusters-cache';
 import { WebsocketClient } from './config/websocket/websocket-client';
+// import { WebsocketClient } from './config/websocket-client';
+// import { verifyEnvVariables } from 'swap-ease-utils';
+
+dotenv.config();
+
+// verifyEnvVariables([
+//   'MONGO_DB_NAME',
+//   'MONGO_DB_CONNECTION_STRING',
+//   'RESERVOIR_WEBSOCKET_URL',
+// ]);
 
 export const clustersCache = new ClustersCache();
 

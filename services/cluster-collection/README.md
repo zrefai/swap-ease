@@ -1,8 +1,32 @@
-# Introduction
+# Cluster Collection
 
-The swap-ease-clustering-api contains the methods to cluster NFTRank data. There are also methods to get and add to mongoDB databases
+This is a component of the swap-ease mono-repo. It is a service that processes a collection into clusters. It will specifically perform these actions in this order:
+
+- Get all stored data for a processed collection
+- Transform the data into a Pandas table
+- Normalize the data for clustering
+- Cluster the data using a clustering algorithm
+- Retrieve all transaction data for the collection from the last 90 days
+- Aggregate all transaction data
+- Insert all data into the DB
+- Alert the sale-ingestor of a newly processed collection by sending it the contract address
+
+It is connected to Rabbit MQ and receives messages with new contract addresses to process AFTER add-collection initially processes the collection.
 
 # Getting Started
+
+## Environment variables
+
+Create a `.env` file and copy and paste the below into that file. Replace the links with the actual environment variable value.
+
+```
+MONGO_DB_NAME=swapEase
+MONGO_DB_CONNECTION_STRING=[Go here](https://cloud.mongodb.com/v2/63126bef095c44751357180b#/overview?connectCluster=Cluster0)
+RESERVOIR_API_URL=https://api.reservoir.tools
+RESERVOIR_API_KEY=[Go here](https://dashboard.reservoir.tools/)
+RABBIT_MQ_URL=[Go here]()
+SALE_INGESTOR_URL=[Go here]()
+```
 
 ## Install Dependencies
 
@@ -69,17 +93,3 @@ deactivate
 ```
 
 If you absolutely can't figure out whats going on with the packages (for some reason it's just not working), you can delete venv and run through installing the dependencies from scratch
-
-# Build and Test
-
-TODO: Describe and show how to build your code and run the tests.
-
-# Contribute
-
-TODO: Explain how other users and developers can contribute to make your code better.
-
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)

@@ -7,6 +7,7 @@
     "url": "git+https://github.com/zrefai/swap-ease.git"
   },
   "scripts": {
+    "build": "npm run build --workspace=swap-ease-data --workspace=swap-ease-utils --workspace=add-collection --workspace=gql-service ---workspace=sale-ingestor",
     "start": "npm run start --workspace=gql-service"
   },
   "author": "Zaki Refai",
