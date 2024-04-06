@@ -2,9 +2,12 @@
   "name": "sale-ingestor",
   "version": "1.0.0",
   "description": "Micro-service to ingest sales from the Reservoir Webhook. Each kind of sale for a tracked collection is processed in a specific way to ensure high trading data accuracy.",
-  "main": "./build/index.js",
+  "main": "./dist/index.js",
+  "keywords": [],
+  "author": "Zaki Refai",
+  "license": "ISC",
   "scripts": {
-    "clean": "rimraf ./build",
+    "clean": "rimraf ./dist",
     "build": "npm-run-all lint format clean && tsc",
     "start": "ts-node src",
     "local:watch": "nodemon src -e ts,json --exec 'npm run local'",
@@ -12,9 +15,6 @@
     "format": "npx prettier --write src",
     "format:check": "npx prettier --check src"
   },
-  "keywords": [],
-  "author": "Zaki Refai",
-  "license": "ISC",
   "dependencies": {
     "@reservoir0x/reservoir-sdk": "^1.10.0",
     "dotenv": "^16.3.1",

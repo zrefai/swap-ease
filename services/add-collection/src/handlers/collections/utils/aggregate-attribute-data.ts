@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { Attribute, Token } from 'swap-ease-data';
+import { Token, TokenAttribute } from 'swap-ease-data';
 
 export function aggregateAttributeData(tokens: Token[]) {
   const attributeTypes = new Set();
@@ -47,10 +47,12 @@ export function aggregateAttributeData(tokens: Token[]) {
       }
     }
 
-    const currentAttributeTypes = currentAttributes.map((att: Attribute) => {
-      assert(att.key, 'Key was undefined for the attribute');
-      return att.key;
-    });
+    const currentAttributeTypes = currentAttributes.map(
+      (att: TokenAttribute) => {
+        assert(att.key, 'Key was undefined for the attribute');
+        return att.key;
+      },
+    );
 
     // Create an absent count for all attributes that are not present in each token
     allAttributeTypes

@@ -1,10 +1,13 @@
 {
   "name": "add-collection",
   "version": "1.0.0",
+  "author": "Zaki Refai",
+  "license": "ISC",
   "description": "Micro-service to process an NFT collection and add it to our DBs.",
-  "main": "./src/index.ts",
+  "main": "./dist/index.js",
+  "keywords": [],
   "scripts": {
-    "clean": "rimraf ./build",
+    "clean": "rimraf ./dist",
     "build": "npm-run-all clean format lint && tsc",
     "start": "ts-node src",
     "local:watch": "nodemon src -e ts,json --exec 'npm run local'",
@@ -12,9 +15,6 @@
     "format": "npx prettier --write src",
     "format:check": "npx prettier --check src"
   },
-  "keywords": [],
-  "author": "Zaki Refai",
-  "license": "ISC",
   "dependencies": {
     "@reservoir0x/reservoir-sdk": "^1.12.18",
     "amqplib": "^0.10.3",

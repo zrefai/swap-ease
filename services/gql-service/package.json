@@ -1,6 +1,7 @@
 {
   "name": "gql-service",
-  "private": true,
+  "author": "Zaki Refai",
+  "license": "ISC",
   "description": "A template for TypeScript projects with pre-configured tooling",
   "version": "1.0.0",
   "main": "dist/index.js",
@@ -53,6 +54,7 @@
       }
     }
   },
-  "author": "Zaki Refai",
-  "license": "ISC"
+  "prettier": {
+    "singleQuote": true
+  }
 }
