@@ -13,15 +13,15 @@ kmeans_kwargs = {
 
 # TODO: Low collection counts do not need high number of clusters
 
-
 def getKMeanLabels(dataFrame) -> list[int]:
     bestScore = -1
     labels: list[int] = []
 
     scaledDataFrame = StandardScaler().fit_transform(dataFrame)
-
+    
+    print("Generating labels for clusters...")
+    
     for c in range(MIN_CLUSTERS, MAX_CLUSTERS):
-        print("Generating labels for", c, "clusters")
         kmeans = KMeans(n_clusters=c, **kmeans_kwargs)
         kmeans.fit(scaledDataFrame)
         score = silhouette_score(scaledDataFrame, kmeans.labels_)
