@@ -15,13 +15,18 @@ export class ClustersAggregates {
     return await this.clustersAggregates.findOne({ id });
   }
 
+  /**
+   * Bulk write the given operations and seesion. Operations are typed using the ClustersAggregates model. USE ONLY FOR ATLAS API FUNCTIONS, since bulkWrite in Atlas API env returns Promise<null>.
+   * @param operations Operations to perform on the ClustersAggregate DB.
+   * @param session Session for a transaction.
+   * @returns null
+   */
   async bulkWrite(
     operations: AnyBulkWriteOperation<ClustersAggregate>[],
     session: ClientSession | undefined = undefined,
   ) {
-    const response = await this.clustersAggregates.bulkWrite(operations, {
+    return await this.clustersAggregates.bulkWrite(operations, {
       session,
     });
-    return response.isOk();
   }
 }
