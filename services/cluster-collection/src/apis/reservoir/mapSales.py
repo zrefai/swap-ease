@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 import uuid
 from models.sale import Sale, FeeBreakdown, Price, Amount, Currency
 from apis.reservoir.salesDataClasses import GetSalesResponse
@@ -18,12 +18,12 @@ def mapGetSalesResponse(response) -> GetSalesResponse:
                 batchId=batchId,
                 txHash=sale['txHash'],
                 block=sale['block'],
-                timestamp=datetime.utcfromtimestamp(sale['timestamp']),
+                timestamp=datetime.fromtimestamp(sale['timestamp'], timezone.utc),
                 contractAddress=sale['token']['contract'],
                 tokenId=sale['token']['tokenId'],
-                orderSource=sale['orderSource'],
+                orderSource=sale['orderSource'].replace('.', '_'),
                 orderKind=sale['orderKind'],
-                fillSource=sale['fillSource'],
+                fillSource=sale['fillSource'].replace('.', '_'),
                 fromAddress=sale['from'],
                 toAddress=sale['to'],
                 price=mapPrice(sale['price']),

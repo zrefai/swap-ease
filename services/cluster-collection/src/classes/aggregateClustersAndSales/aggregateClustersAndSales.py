@@ -1,9 +1,8 @@
-import uuid
-import datetime
 import traceback
 from models.sale import Sale
 from models.cluster import Cluster
 from config.mongoDb import get_client
+from datetime import datetime, timezone
 from data.sales.salesClass import SalesClass
 from data.clusters.clusters import ClustersClass
 from models.clusterAggregate import ClustersAggregate
@@ -15,8 +14,7 @@ from classes.generateClusters.generateClustersClass import GenerateClustersClass
 
 # TODO: Looking up a future sale can involve an inverse search, where we create a dictionary of tokenIds that have the corresponding cluster as the value
 # TODO: When adding the tokens to the DB, create a compound index on clusterId, contractAddress, tokenId, and rank.
-# TODO: Rename clusterAggregates to clustersAggregate for single and clustersAggregates for multi (update collection name to multi)
-# TODO: Once address is fully processed, remove contract address from queue in DB collection
+# TODO: Once address is fully processed, remove contract address from queue in DB collection, so that we don't get double processing of a collection
 
 class AggregateClustersAndSales:
     def __init__(self):
@@ -52,7 +50,6 @@ class AggregateClustersAndSales:
                 contractAddress, clusters, sales)
 
             # Save all data under a DB transaction
-            # I have removed the session parameter from .addSales() to keep it outside of the transaction, what are the ramifications?
             with self.client.start_session() as session:
                 self.__runTransactionWithRetry(
                     clustersAggregate,
@@ -62,6 +59,7 @@ class AggregateClustersAndSales:
                 )
 
             # Cache new collection in sale ingestor
+            # TODO: uncomment
             # self.saleIngestor.callCacheCollection(contractAddress)
 
             return 'Success', 200
@@ -132,8 +130,8 @@ class AggregateClustersAndSales:
 
         return ClustersAggregate(
             id=contractAddress,
-            createdAt=datetime.datetime.utcnow(),
-            updatedAt=datetime.datetime.utcnow(),
+            createdAt=datetime.now(timezone.utc),
+            updatedAt=datetime.now(timezone.utc),
             latestSaleBlockNumber=collectionLatestSaleBlockNumber,
             totalVolume=collectionTotalVolume,
             totalSalesByMarketplace=collectionTotalSalesByMarketplace        
