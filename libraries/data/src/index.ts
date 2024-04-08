@@ -23,4 +23,9 @@ export {
   Collections,
   Sales,
   Tokens,
+  CLUSTERS,
+  CLUSTERSAGGREGATES,
+  COLLECTIONS,
+  SALES,
+  TOKENS,
 } from './data';

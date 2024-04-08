@@ -1,6 +1,6 @@
 {
   "name": "@swap-ease/data",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A package containing common data patterns and models used across different services within swap-ease",
   "author": "Zaki Refai",
   "license": "ISC",
