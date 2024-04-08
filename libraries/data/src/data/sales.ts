@@ -21,6 +21,20 @@ export class Sales {
       .toArray();
   }
 
+  async getSalesLessThanDate(date: Date) {
+    return await this.sales
+      .aggregate([
+        {
+          $match: {
+            timestamp: {
+              $lt: date,
+            },
+          },
+        },
+      ])
+      .toArray();
+  }
+
   async bulkWrite(operations: AnyBulkWriteOperation<Sale>[]) {
     const response = await this.sales.bulkWrite(operations);
     return response.isOk();

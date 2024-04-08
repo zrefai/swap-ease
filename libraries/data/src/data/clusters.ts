@@ -1,4 +1,4 @@
-import { Collection, Db } from 'mongodb';
+import { AnyBulkWriteOperation, ClientSession, Collection, Db } from 'mongodb';
 import { Cluster } from '../models/cluster';
 import { CLUSTERS } from '.';
 
@@ -27,5 +27,13 @@ export class Clusters {
       .toArray();
 
     return clusters;
+  }
+
+  async bulkWrite(
+    operations: AnyBulkWriteOperation<Cluster>[],
+    session: ClientSession | undefined = undefined,
+  ) {
+    const response = await this.clusters.bulkWrite(operations, { session });
+    return response.isOk();
   }
 }

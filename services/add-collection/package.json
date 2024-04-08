@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@reservoir0x/reservoir-sdk": "^1.12.18",
+    "@swap-ease/data": "file:../../libraries/data",
     "amqplib": "^0.10.3",
     "dotenv": "^16.4.1",
     "express": "^4.18.2",

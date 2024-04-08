@@ -47,7 +47,7 @@ exports = async function AggregateNewSale(changeEvent) {
   const sale = changeEvent.fullDocument;
 
   try {
-    // If this is an "insert" event, insert the document into the other collection
+    // If this is an "insert" event, aggregate the document into the other collection
     if (changeEvent.operationType === 'insert' && sale.batchId === null) {
       await writeTransaction(client, db, sale);
     }
