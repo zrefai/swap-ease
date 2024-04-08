@@ -2,34 +2,36 @@ const MS_IN_MINUTE = 60000;
 const CURRENT_DATE = Date.now();
 const NINETY_DAYS_AGO = new Date(CURRENT_DATE - 90 * 24 * 60 * MS_IN_MINUTE);
 
-async function writeTransaction(client, db, sales) {
+async function writeTransaction(client, db, saleDocuments) {
+  const { Clusters, ClustersAggregates, Sales } = require('@swap-ease/data');
+
   const clustersUpdateDocuments = createUpdateDocumentsFromSales(
-    sales,
+    saleDocuments,
     'clusterId'
   );
   const clusterAggregatesUpdateDocuments = createUpdateDocumentsFromSales(
-    sales,
+    saleDocuments,
     'contractAddress'
   );
-  const saleDeleteDocuments = createDeleteOneDocuments(sales);
+  const saleDeleteDocuments = createDeleteOneDocuments(saleDocuments);
 
-  const clustersCollection = new ClustersCollection(db);
-  const clustersAggregatesCollection = new ClustersAggregateCollection(db);
-  const salesCollection = new SalesCollection(db);
+  const clusters = new Clusters(db);
+  const clustersAggregate = new ClustersAggregates(db);
+  const sales = new Sales(db);
 
   const session = client.startSession();
 
   try {
     await session.withTransaction(async () => {
-      await clustersCollection.bulkWrite(clustersUpdateDocuments, session);
-      await clustersAggregatesCollection.bulkWrite(
+      await clusters.bulkWrite(clustersUpdateDocuments, session);
+      await clustersAggregate.bulkWrite(
         clusterAggregatesUpdateDocuments,
         session
       );
-      await salesCollection.bulkWrite(saleDeleteDocuments, session);
+      await sales.bulkWrite(saleDeleteDocuments, session);
     });
   } catch (error) {
-    console.error(err);
+    console.error(error);
     await session.abortTransaction();
     throw new Error('Could not commit transaction');
   } finally {
@@ -38,19 +40,21 @@ async function writeTransaction(client, db, sales) {
 }
 
 exports = async function AggregateExpiredSale() {
+  const { Sales } = require('@swap-ease/data');
+
   const client = context.services.get('mongodb-atlas');
   const db = client.db('swapEase');
 
-  const salesCollection = new SalesCollection(db);
+  const sales = new Sales(db);
 
-  const sales = await salesCollection.getSalesPastNinetyDays();
+  const saleDocuments = await sales.getSalesLessThanDate(NINETY_DAYS_AGO);
 
   if (sales.length === 0) {
     return true;
   }
 
   try {
-    await writeTransaction(client, db, sales);
+    await writeTransaction(client, db, saleDocuments);
     return true;
   } catch (error) {
     console.log(error);
@@ -59,55 +63,6 @@ exports = async function AggregateExpiredSale() {
     );
   }
 };
-
-class SalesCollection {
-  constructor(db) {
-    this.collection = db.collection('sales');
-  }
-
-  async getSalesPastNinetyDays() {
-    const sales = await this.collection
-      .aggregate([
-        {
-          $match: {
-            timestamp: {
-              $lt: NINETY_DAYS_AGO,
-            },
-          },
-        },
-      ])
-      .toArray();
-
-    return sales;
-  }
-
-  async bulkWrite(documents, session) {
-    const response = await this.collection.bulkWrite(documents, { session });
-    return response.isOk();
-  }
-}
-
-class ClustersCollection {
-  constructor(db) {
-    this.collection = db.collection('clusters');
-  }
-
-  async bulkWrite(documents, session) {
-    const response = await this.collection.bulkWrite(documents, { session });
-    return response.isOk();
-  }
-}
-
-class ClustersAggregateCollection {
-  constructor(db) {
-    this.collection = db.collection('clustersAggregate');
-  }
-
-  async bulkWrite(documents, session) {
-    const response = await this.collection.bulkWrite(documents, { session });
-    return response.isOk();
-  }
-}
 
 function createUpdateDocumentsFromSales(sales, property) {
   const aggregates = new Map();
