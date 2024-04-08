@@ -31,7 +31,7 @@ async function writeTransaction(client, db, saleDocuments) {
       await sales.bulkWrite(saleDeleteDocuments, session);
     });
   } catch (error) {
-    console.error(err);
+    console.error(error);
     await session.abortTransaction();
     throw new Error('Could not commit transaction');
   } finally {
