@@ -23,7 +23,6 @@
     "express": "^4.18.2",
     "mongodb": "^6.3.0",
     "morgan": "^1.10.0",
-    "swap-ease-data": "file:../../libraries/data",
     "swap-ease-utils": "file:../../libraries/utils",
     "viem": "^1.19.15"
   },
