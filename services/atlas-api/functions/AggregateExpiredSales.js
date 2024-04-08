@@ -135,6 +135,8 @@ function createUpdateOneDocuments(aggregates) {
 
     documents.push(doc);
   }
+
+  return documents;
 }
 
 function createDeleteOneDocuments(sales) {
