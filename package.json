@@ -21,6 +21,7 @@
     "services/gql-service",
     "services/sale-ingestor",
     "libraries/data",
-    "libraries/utils"
+    "libraries/utils",
+    "clients/swap-ease"
   ]
 }
