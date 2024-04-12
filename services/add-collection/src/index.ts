@@ -3,7 +3,7 @@ import './config/rabbit-mq-client';
 import dbClient from './config/db-client';
 import { verifyEnvVariables } from 'swap-ease-utils';
 // import { consumeAndProduce } from './config/rabbit-mq-client';
-// import { AddCollection } from "./handlers/collections/add-collection.handler";
+import { AddCollection } from './handlers/collections/add-collection.handler';
 
 dotenv.config();
 
@@ -17,9 +17,9 @@ verifyEnvVariables([
 
 dbClient
   .then(async () => {
-    console.log('DB client connected');
-    // const controller = new AddCollection();
-    // await controller.handler("0x9a534628b4062e123ce7ee2222ec20b86e16ca8f");
+    // console.log('DB client connected');
+    const controller = new AddCollection();
+    await controller.handler('0x9a534628b4062e123ce7ee2222ec20b86e16ca8f');
     // await consumeAndProduce();
   })
   .catch((reason) => {

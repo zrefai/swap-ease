@@ -14,12 +14,5 @@ export function mapCollection(collection: WithId<Collection>): GQLCollection {
     twitterUrl: collection.twitterUrl,
     discordUrl: collection.discordUrl,
     externalUrl: collection.externalUrl,
-    attributes: collection.attributes.map((attribute) => ({
-      type: attribute.type,
-      values: attribute.values.map((value) => ({
-        type: value.type,
-        count: value.count,
-      })),
-    })),
   };
 }

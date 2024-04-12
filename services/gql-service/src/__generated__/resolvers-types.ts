@@ -61,7 +61,6 @@ export type ClustersAggregate = {
 
 export type Collection = {
   __typename?: 'Collection';
-  attributes?: Maybe<Array<Maybe<Attribute>>>;
   createdAt?: Maybe<Scalars['Date']['output']>;
   discordUrl?: Maybe<Scalars['String']['output']>;
   externalUrl?: Maybe<Scalars['String']['output']>;
@@ -72,6 +71,31 @@ export type Collection = {
   totalSupply: Scalars['String']['output'];
   twitterUrl?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['Date']['output']>;
+};
+
+export type CollectionAttribute = {
+  __typename?: 'CollectionAttribute';
+  type?: Maybe<Scalars['String']['output']>;
+  values?: Maybe<Array<Maybe<CollectionAttributeValues>>>;
+};
+
+export type CollectionAttributeValues = {
+  __typename?: 'CollectionAttributeValues';
+  count?: Maybe<Scalars['Int']['output']>;
+  tokenIds?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+export type CollectionEdge = {
+  __typename?: 'CollectionEdge';
+  cursor: Scalars['Cursor']['output'];
+  node: Collection;
+};
+
+export type CollectionsConnection = {
+  __typename?: 'CollectionsConnection';
+  edges: Array<Maybe<CollectionEdge>>;
+  pageInfo: PageInfo;
 };
 
 export type Mutation = {
@@ -113,7 +137,8 @@ export type Query = {
   clusters: Array<Maybe<Cluster>>;
   clustersAggregate?: Maybe<ClustersAggregate>;
   collection?: Maybe<Collection>;
-  collections: Array<Maybe<Collection>>;
+  collectionAttributes?: Maybe<Array<Maybe<CollectionAttribute>>>;
+  collections: CollectionsConnection;
   salesForCluster: SalesConnection;
   salesForToken: SalesConnection;
   token?: Maybe<Token>;
@@ -138,6 +163,16 @@ export type QueryClustersAggregateArgs = {
 
 export type QueryCollectionArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type QueryCollectionAttributesArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryCollectionsArgs = {
+  pageArgs?: InputMaybe<PageArgs>;
 };
 
 
@@ -350,6 +385,10 @@ export type ResolversTypes = ResolversObject<{
   Float: ResolverTypeWrapper<Scalars['Float']['output']>;
   ClustersAggregate: ResolverTypeWrapper<ClustersAggregate>;
   Collection: ResolverTypeWrapper<Collection>;
+  CollectionAttribute: ResolverTypeWrapper<CollectionAttribute>;
+  CollectionAttributeValues: ResolverTypeWrapper<CollectionAttributeValues>;
+  CollectionEdge: ResolverTypeWrapper<CollectionEdge>;
+  CollectionsConnection: ResolverTypeWrapper<CollectionsConnection>;
   Cursor: ResolverTypeWrapper<Scalars['Cursor']['output']>;
   Date: ResolverTypeWrapper<Scalars['Date']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
@@ -382,6 +421,10 @@ export type ResolversParentTypes = ResolversObject<{
   Float: Scalars['Float']['output'];
   ClustersAggregate: ClustersAggregate;
   Collection: Collection;
+  CollectionAttribute: CollectionAttribute;
+  CollectionAttributeValues: CollectionAttributeValues;
+  CollectionEdge: CollectionEdge;
+  CollectionsConnection: CollectionsConnection;
   Cursor: Scalars['Cursor']['output'];
   Date: Scalars['Date']['output'];
   Mutation: {};
@@ -453,7 +496,6 @@ export type ClustersAggregateResolvers<ContextType = DataSourceContext, ParentTy
 
 export type CollectionResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Collection'] = ResolversParentTypes['Collection']> = ResolversObject<{
   __resolveReference?: ReferenceResolver<Maybe<ResolversTypes['Collection']>, { __typename: 'Collection' } & GraphQLRecursivePick<ParentType, {"id":true}>, ContextType>;
-  attributes?: Resolver<Maybe<Array<Maybe<ResolversTypes['Attribute']>>>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   discordUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   externalUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -464,6 +506,31 @@ export type CollectionResolvers<ContextType = DataSourceContext, ParentType exte
   totalSupply?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   twitterUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type CollectionAttributeResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['CollectionAttribute'] = ResolversParentTypes['CollectionAttribute']> = ResolversObject<{
+  type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  values?: Resolver<Maybe<Array<Maybe<ResolversTypes['CollectionAttributeValues']>>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type CollectionAttributeValuesResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['CollectionAttributeValues'] = ResolversParentTypes['CollectionAttributeValues']> = ResolversObject<{
+  count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  tokenIds?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type CollectionEdgeResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['CollectionEdge'] = ResolversParentTypes['CollectionEdge']> = ResolversObject<{
+  cursor?: Resolver<ResolversTypes['Cursor'], ParentType, ContextType>;
+  node?: Resolver<ResolversTypes['Collection'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type CollectionsConnectionResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['CollectionsConnection'] = ResolversParentTypes['CollectionsConnection']> = ResolversObject<{
+  edges?: Resolver<Array<Maybe<ResolversTypes['CollectionEdge']>>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -504,7 +571,8 @@ export type QueryResolvers<ContextType = DataSourceContext, ParentType extends R
   clusters?: Resolver<Array<Maybe<ResolversTypes['Cluster']>>, ParentType, ContextType, RequireFields<QueryClustersArgs, 'contractAddress'>>;
   clustersAggregate?: Resolver<Maybe<ResolversTypes['ClustersAggregate']>, ParentType, ContextType, RequireFields<QueryClustersAggregateArgs, 'id'>>;
   collection?: Resolver<Maybe<ResolversTypes['Collection']>, ParentType, ContextType, RequireFields<QueryCollectionArgs, 'id'>>;
-  collections?: Resolver<Array<Maybe<ResolversTypes['Collection']>>, ParentType, ContextType>;
+  collectionAttributes?: Resolver<Maybe<Array<Maybe<ResolversTypes['CollectionAttribute']>>>, ParentType, ContextType, RequireFields<QueryCollectionAttributesArgs, 'id'>>;
+  collections?: Resolver<ResolversTypes['CollectionsConnection'], ParentType, ContextType, Partial<QueryCollectionsArgs>>;
   salesForCluster?: Resolver<ResolversTypes['SalesConnection'], ParentType, ContextType, RequireFields<QuerySalesForClusterArgs, 'clusterId'>>;
   salesForToken?: Resolver<ResolversTypes['SalesConnection'], ParentType, ContextType, RequireFields<QuerySalesForTokenArgs, 'contractAddress' | 'tokenId'>>;
   token?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<QueryTokenArgs, 'contractAddress' | 'tokenId'>>;
@@ -612,6 +680,10 @@ export type Resolvers<ContextType = DataSourceContext> = ResolversObject<{
   Cluster?: ClusterResolvers<ContextType>;
   ClustersAggregate?: ClustersAggregateResolvers<ContextType>;
   Collection?: CollectionResolvers<ContextType>;
+  CollectionAttribute?: CollectionAttributeResolvers<ContextType>;
+  CollectionAttributeValues?: CollectionAttributeValuesResolvers<ContextType>;
+  CollectionEdge?: CollectionEdgeResolvers<ContextType>;
+  CollectionsConnection?: CollectionsConnectionResolvers<ContextType>;
   Cursor?: GraphQLScalarType;
   Date?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;

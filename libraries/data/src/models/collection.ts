@@ -10,15 +10,17 @@ export interface Collection extends Audit {
   twitterUrl?: string;
   externalUrl?: string;
   creator?: string;
-  attributes?: Attribute[];
+  // Not used in gql-service, but used in add-collection when creating collection document
+  attributes?: CollectionAttribute[];
 }
 
-export interface Attribute {
+export interface CollectionAttribute {
   type: string;
-  values: AttributeValue[];
+  values: CollectionAttributeValue[];
 }
 
-export interface AttributeValue {
+export interface CollectionAttributeValue {
   type: string;
   count: number;
+  tokenIds: string[];
 }

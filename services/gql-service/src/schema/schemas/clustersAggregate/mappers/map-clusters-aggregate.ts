@@ -4,10 +4,10 @@ import { mapTotalSalesByMarketplace } from '../../../mappers/map-total-sales-by-
 import { ClustersAggregate } from 'swap-ease-data';
 
 export function mapClustersAggregate(
-  clustersAggregate: WithId<ClustersAggregate>
+  clustersAggregate: WithId<ClustersAggregate>,
 ): GQLClustersAggregate {
   const { totalSales, totalSalesByMarketplace } = mapTotalSalesByMarketplace(
-    clustersAggregate.totalSalesByMarketplace
+    clustersAggregate.totalSalesByMarketplace,
   );
 
   return {

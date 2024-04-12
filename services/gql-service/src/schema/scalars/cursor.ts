@@ -9,7 +9,7 @@ const cursorScalar = new GraphQLScalarType({
       return value.toString();
     }
     throw Error(
-      'GraphQL Cursor Scalar serializer expected an `ObjectId` object'
+      'GraphQL Cursor Scalar serializer expected an `ObjectId` object',
     );
   },
   parseValue(value) {

@@ -19,7 +19,7 @@ export function mapToken(token: WithId<Token>): GQLToken {
           key: attribute.key,
           value: attribute.value,
           score: attribute.score.valueOf(),
-        }) as TokenAttribute
+        }) as TokenAttribute,
     ),
   };
 }

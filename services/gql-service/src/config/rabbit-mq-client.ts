@@ -18,7 +18,7 @@ export async function produce(contractAddress: string) {
     await channel.assertQueue(ADD_COLLECTION_QUEUE);
     return channel.sendToQueue(
       ADD_COLLECTION_QUEUE,
-      Buffer.from(JSON.stringify({ address: contractAddress }))
+      Buffer.from(JSON.stringify({ address: contractAddress })),
     );
   } catch (error) {
     console.error(error);

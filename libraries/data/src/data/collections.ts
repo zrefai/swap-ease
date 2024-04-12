@@ -2,9 +2,10 @@ import { Collection as MongoCollection, ClientSession, Db } from 'mongodb';
 import { insertOne } from './audit';
 import { Collection } from '../models/collection';
 import { COLLECTIONS } from '.';
+import { PartialModel } from '../models';
 
 export class Collections {
-  private collections: MongoCollection<Collection>;
+  collections: MongoCollection<Collection>;
 
   constructor(db: Db) {
     this.collections = db.collection(
@@ -24,11 +25,21 @@ export class Collections {
     return await this.collections.findOne({ id });
   }
 
+  // Not used right now, maybe we can remove
   async find() {
     return await this.collections
-      .find()
+      .find({}, { projection: { attributes: 0 } })
       .sort({ $natural: -1 })
       .limit(20)
       .toArray();
+  }
+
+  async getCollectionAttributes(
+    id: string,
+  ): Promise<PartialModel<Collection, 'attributes'> | null> {
+    return await this.collections.findOne(
+      { id },
+      { projection: { attributes: 1 } },
+    );
   }
 }

@@ -14,18 +14,27 @@ export function aggregateAttributeData(tokens: Token[]) {
 
   // Create array of all unique attribute types from tokens
   const allAttributeTypes = Array.from(attributeTypes) as string[];
-  const attributes: { [key: string]: { [key: string]: number } } = {
+  const attributes: {
+    [key: string]: { [key: string]: { count: number; tokenIds: string[] } };
+  } = {
     attribute_count: {},
   };
 
   for (let i = 0; i < tokensCopy.length; i++) {
+    const tokenId = tokensCopy[i].tokenId;
     const currentAttributes = tokensCopy[i].attributes;
 
     // Aggregate attribute_count
     if (attributes.attribute_count[currentAttributes.length]) {
-      attributes.attribute_count[currentAttributes.length]++;
+      attributes.attribute_count[currentAttributes.length].count++;
+      attributes.attribute_count[currentAttributes.length].tokenIds.push(
+        tokenId,
+      );
     } else {
-      attributes.attribute_count[currentAttributes.length] = 1;
+      attributes.attribute_count[currentAttributes.length] = {
+        count: 1,
+        tokenIds: [tokenId],
+      };
     }
 
     // Aggregate attributes
@@ -37,13 +46,14 @@ export function aggregateAttributeData(tokens: Token[]) {
       // Count number of occurences for each value of an attribute type
       if (attributes[key]) {
         if (attributes[key][value]) {
-          attributes[key][value] += 1;
+          attributes[key][value].count++;
+          attributes[key][value].tokenIds.push(tokenId);
         } else {
-          attributes[key][value] = 1;
+          attributes[key][value] = { count: 1, tokenIds: [tokenId] };
         }
       } else {
         attributes[key] = {};
-        attributes[key][value] = 1;
+        attributes[key][value] = { count: 1, tokenIds: [tokenId] };
       }
     }
 
@@ -60,12 +70,17 @@ export function aggregateAttributeData(tokens: Token[]) {
       .forEach((absentTraitType) => {
         if (attributes[absentTraitType]) {
           if (attributes[absentTraitType].absent_count) {
-            attributes[absentTraitType].absent_count += 1;
+            attributes[absentTraitType].absent_count.count++;
           } else {
-            attributes[absentTraitType].absent_count = 1;
+            attributes[absentTraitType].absent_count = {
+              count: 1,
+              tokenIds: [],
+            };
           }
         } else {
-          attributes[absentTraitType] = { absent_count: 1 };
+          attributes[absentTraitType] = {
+            absent_count: { count: 1, tokenIds: [] },
+          };
         }
       });
   }

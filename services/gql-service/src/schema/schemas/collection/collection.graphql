@@ -1,10 +1,21 @@
 extend type Query {
   collection(id: ID!): Collection
-  collections: [Collection]! # Implement pagination here
+  collections(pageArgs: PageArgs): CollectionsConnection!
+  collectionAttributes(id: ID!): [CollectionAttribute]
 }
 
 extend type Mutation {
   addCollection(contractAddress: String!): MutationResponse
+}
+
+type CollectionsConnection {
+  edges: [CollectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type CollectionEdge {
+  node: Collection!
+  cursor: Cursor!
 }
 
 type Collection @key(fields: "id") {
@@ -18,5 +29,15 @@ type Collection @key(fields: "id") {
   externalUrl: String
   createdAt: Date
   updatedAt: Date
-  attributes: [Attribute]
+}
+
+type CollectionAttribute {
+  type: String
+  values: [CollectionAttributeValues]
+}
+
+type CollectionAttributeValues {
+  type: String
+  count: Int
+  tokenIds: [String]
 }

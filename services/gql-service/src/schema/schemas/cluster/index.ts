@@ -9,9 +9,8 @@ export const clusterResolvers: Resolvers = {
       return document ? mapCluster(document) : null;
     },
     clusters: async (_parent, { contractAddress }, context) => {
-      const documents = await context.dataSources.clusters.find(
-        contractAddress
-      );
+      const documents =
+        await context.dataSources.clusters.find(contractAddress);
       return documents.map((document) => mapCluster(document));
     },
   },

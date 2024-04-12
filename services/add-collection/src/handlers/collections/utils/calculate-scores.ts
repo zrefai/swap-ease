@@ -8,7 +8,9 @@ import { Token } from 'swap-ease-data';
  */
 export function calculateScores(
   tokens: Token[],
-  attributes: { [key: string]: { [key: string]: number } },
+  attributes: {
+    [key: string]: { [key: string]: { count: number; tokenIds: string[] } };
+  },
 ) {
   const totalSupply = tokens.length;
   const attributeTypes = Object.keys(attributes);
@@ -27,7 +29,8 @@ export function calculateScores(
       for (let j = 0; j < currentAttributes.length; j++) {
         const rarityScore =
           1 /
-          (attributes[currentAttributes[j].key][currentAttributes[j].value] /
+          (attributes[currentAttributes[j].key][currentAttributes[j].value]
+            .count /
             totalSupply);
 
         currentAttributes[j].score = new Double(rarityScore);
@@ -44,7 +47,7 @@ export function calculateScores(
           if (attributeType === 'attribute_count') {
             const rarityScoreNumTraits =
               1 /
-              (attributes.attribute_count[currentAttributesLength] /
+              (attributes.attribute_count[currentAttributesLength].count /
                 totalSupply);
             // Push attribute for number of attributes (i.e attribute_count)
             currentAttributes.push({
@@ -56,7 +59,7 @@ export function calculateScores(
             totalScore += rarityScoreNumTraits;
           } else {
             const rarityScoreNull =
-              1 / (attributes[attributeType].absent_count / totalSupply);
+              1 / (attributes[attributeType].absent_count.count / totalSupply);
             // Add the attribute that was previously absent from the list of attributes for the current token
             currentAttributes.push({
               key: attributeType,

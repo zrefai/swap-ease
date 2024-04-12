@@ -10,8 +10,11 @@
     "node": ">=18.0"
   },
   "scripts": {
-    "build": "npm run codegen && tsc",
+    "clean": "rimraf ./dist",
+    "format": "npx prettier --write src",
+    "format:check": "npx prettier --check src",
     "codegen": "graphql-codegen",
+    "build": "npm-run-all clean format codegen && tsc",
     "postinstall": "npm run build",
     "start": "node dist/index.js",
     "dev": "nodemon --watch \"src/**\" --ext \"ts,json,graphql\" --exec \"npm run build && npm run start\" --ignore ./src/__generated__/ --ignore ./src/datasources/BarAPI.ts",
@@ -41,7 +44,9 @@
     "nodemon": "^3.0.0",
     "ts-jest": "^29.0.2",
     "ts-node": "^10.9.1",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "prettier": "^3.1.0",
+    "npm-run-all": "^4.1.5"
   },
   "jest": {
     "preset": "ts-jest",

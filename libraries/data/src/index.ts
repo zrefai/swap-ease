@@ -4,8 +4,8 @@ export {
   Cluster,
   ClustersAggregate,
   Collection,
-  Attribute,
-  AttributeValue,
+  CollectionAttribute,
+  CollectionAttributeValue,
   Sale,
   Currency,
   Amount,
@@ -13,6 +13,7 @@ export {
   FeeBreakdown,
   Token,
   TokenAttribute,
+  PartialModel,
 } from './models';
 
 // Data functions and classes

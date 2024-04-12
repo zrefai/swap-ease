@@ -1,4 +1,4 @@
-import { Collection, ObjectId, WithId } from 'mongodb';
+import { Collection, FindOptions, ObjectId, WithId } from 'mongodb';
 import { PageArgs } from '../../__generated__/resolvers-types';
 import { GraphQLError } from 'graphql';
 import assert from 'assert';
@@ -6,19 +6,29 @@ import assert from 'assert';
 const QUERY_LIMIT = 21;
 const PAGE_LIMIT = 20;
 
-export const getPaginatedResponse = async <T, K, H, S>(
-  args: K,
-  collection: Collection<T>,
-  mapFn: (doc: WithId<T>) => H,
-  pageArgs?: PageArgs
-) => {
+interface GetPaginatedResponseArgs<T, K, H, S> {
+  args: K;
+  collection: Collection<T>;
+  mapFn: (doc: WithId<T>) => H;
+  pageArgs?: PageArgs;
+  options?: FindOptions<T>;
+}
+
+export const getPaginatedResponse = async <T, K, H, S>({
+  args,
+  collection,
+  mapFn,
+  pageArgs,
+  options,
+}: GetPaginatedResponseArgs<T, K, H, S>) => {
   validatePageArgs(pageArgs);
 
   const documents = await applyCursorsToEdges(
     args,
     collection,
     pageArgs?.before,
-    pageArgs?.after
+    pageArgs?.after,
+    options,
   );
 
   const edges =
@@ -28,14 +38,14 @@ export const getPaginatedResponse = async <T, K, H, S>(
     args,
     documents,
     collection,
-    pageArgs
+    pageArgs,
   );
 
   const isNextPageAvailable = await hasNextPage(
     args,
     documents,
     collection,
-    pageArgs
+    pageArgs,
   );
 
   return {
@@ -54,7 +64,8 @@ const applyCursorsToEdges = async <T, K>(
   args: K,
   collection: Collection<T>,
   before?: string,
-  after?: string
+  after?: string,
+  options?: FindOptions<T>,
 ) => {
   const query: any = {
     ...args,
@@ -72,7 +83,7 @@ const applyCursorsToEdges = async <T, K>(
 
     // Documents come back in reverse order because we get the documents just before the cursor, need to reverse the returned docs
     return await collection
-      .find(query)
+      .find(query, options)
       .sort({ _id: -1 })
       .limit(QUERY_LIMIT)
       .toArray()
@@ -90,7 +101,7 @@ const hasPreviousPage = async <T, K>(
   args: K,
   documents: WithId<T>[],
   collection: Collection<T>,
-  pageArgs?: PageArgs
+  pageArgs?: PageArgs,
 ): Promise<boolean> => {
   if (pageArgs?.last) {
     return documents.length > pageArgs?.last ? true : false;
@@ -117,7 +128,7 @@ const hasNextPage = async <T, K>(
   args: K,
   documents: WithId<T>[],
   collection: Collection<T>,
-  pageArgs?: PageArgs
+  pageArgs?: PageArgs,
 ): Promise<boolean> => {
   if (pageArgs?.first) {
     return documents.length > pageArgs?.first ? true : false;
@@ -143,7 +154,7 @@ const hasNextPage = async <T, K>(
 const mapEdges = <T, H>(
   documents: WithId<T>[],
   mapFn: (doc: WithId<T>) => H,
-  pageArgs?: PageArgs
+  pageArgs?: PageArgs,
 ) => {
   let index = 0;
   let length = documents.length > PAGE_LIMIT ? PAGE_LIMIT : documents.length;
@@ -187,7 +198,7 @@ const validatePageArgs = (pageArgs?: PageArgs) => {
 
   if (first && last) {
     throw new GraphQLError(
-      'Page arguments `first` and `last` cannot be defined in the same query.'
+      'Page arguments `first` and `last` cannot be defined in the same query.',
     );
   }
 
@@ -198,8 +209,8 @@ const validatePageArgs = (pageArgs?: PageArgs) => {
     assert(
       afterId < beforeId,
       new GraphQLError(
-        'Page arguments `before` and `after` are invalid. `after` cursor cannot be greater than or equal to `before` cursor.'
-      )
+        'Page arguments `before` and `after` are invalid. `after` cursor cannot be greater than or equal to `before` cursor.',
+      ),
     );
   }
 };

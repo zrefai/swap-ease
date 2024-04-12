@@ -12,20 +12,20 @@ export const saleResolvers: Resolvers = {
     salesForToken: async (
       _parent,
       { contractAddress, tokenId, pageArgs },
-      context
+      context,
     ) =>
-      await getPaginatedResponse<Sale, any, GQLSale, SalesConnection>(
-        { contractAddress, tokenId },
-        context.dataSources.sales.sales,
-        mapSale,
-        pageArgs
-      ),
+      await getPaginatedResponse<Sale, any, GQLSale, SalesConnection>({
+        args: { contractAddress, tokenId },
+        collection: context.dataSources.sales.sales,
+        mapFn: mapSale,
+        pageArgs,
+      }),
     salesForCluster: async (_parent, { clusterId, pageArgs }, context) =>
-      await getPaginatedResponse<Sale, any, GQLSale, SalesConnection>(
-        { clusterId },
-        context.dataSources.sales.sales,
-        mapSale,
-        pageArgs
-      ),
+      await getPaginatedResponse<Sale, any, GQLSale, SalesConnection>({
+        args: { clusterId },
+        collection: context.dataSources.sales.sales,
+        mapFn: mapSale,
+        pageArgs,
+      }),
   },
 };

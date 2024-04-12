@@ -8,7 +8,7 @@ const positiveIntScalar = new GraphQLScalarType({
       return value.valueOf();
     }
     throw Error(
-      'GraphQL PositiveInt Scalar serializer expected a `Number` object or value greater than 0'
+      'GraphQL PositiveInt Scalar serializer expected a `Number` object or value greater than 0',
     );
   },
   parseValue(value) {
@@ -16,7 +16,7 @@ const positiveIntScalar = new GraphQLScalarType({
       return value;
     }
     throw new Error(
-      'GraphQL Positive Scalar parser expected a `number` or value greater than 0'
+      'GraphQL Positive Scalar parser expected a `number` or value greater than 0',
     );
   },
   parseLiteral(ast) {

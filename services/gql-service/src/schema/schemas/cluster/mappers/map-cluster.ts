@@ -6,7 +6,7 @@ import { Cluster } from 'swap-ease-data';
 
 export function mapCluster(cluster: WithId<Cluster>): GQLCLuster {
   const { totalSales, totalSalesByMarketplace } = mapTotalSalesByMarketplace(
-    cluster.totalSalesByMarketplace
+    cluster.totalSalesByMarketplace,
   );
   const attributes = mapAttributes(cluster.attributes);
 

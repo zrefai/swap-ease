@@ -6,18 +6,18 @@ export const tokenResolvers: Resolvers = {
     token: async (_parent, { contractAddress, tokenId }, context) => {
       const document = await context.dataSources.tokens.findOne(
         contractAddress,
-        tokenId
+        tokenId,
       );
       return document ? mapToken(document) : null;
     },
     tokens: async (
       _parent,
       { contractAddress, tokenIds },
-      context // Maybe we can add an index here for tokenId, contractAddress if query takes too long
+      context, // Maybe we can add an index here for tokenId, contractAddress if query takes too long
     ) => {
       const documents = await context.dataSources.tokens.find(
         contractAddress,
-        tokenIds
+        tokenIds,
       );
       return documents.map((document) => mapToken(document));
     },

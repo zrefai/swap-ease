@@ -55,7 +55,8 @@ export class AddCollection {
         values: Object.keys(attributes[attributeType]).map(
           (attributeValue) => ({
             type: attributeValue,
-            count: attributes[attributeType][attributeValue],
+            count: attributes[attributeType][attributeValue].count,
+            tokenIds: attributes[attributeType][attributeValue].tokenIds,
           }),
         ),
       };

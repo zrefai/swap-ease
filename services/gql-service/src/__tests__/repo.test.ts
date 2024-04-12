@@ -9,7 +9,7 @@ const server = new ApolloServer({
     typeDefs: gql(
       readFileSync('schema.graphql', {
         encoding: 'utf-8',
-      })
+      }),
     ),
     resolvers,
   }),
