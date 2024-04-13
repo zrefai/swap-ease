@@ -32,7 +32,6 @@
     "graphql": "latest",
     "graphql-tag": "latest",
     "mongodb": "^6.5.0",
-    "simple-statistics": "^7.8.3",
     "swap-ease-data": "file:../../libraries/data",
     "swap-ease-utils": "file:../../libraries/utils"
   },

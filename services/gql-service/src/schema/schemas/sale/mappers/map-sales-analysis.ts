@@ -1,6 +1,5 @@
 import { WithId } from 'mongodb';
-import ss from 'simple-statistics';
-import { Sale, SourceSpecialChar } from 'swap-ease-data';
+import { Sale } from 'swap-ease-data';
 import { formatEther, getBigInt } from 'ethers';
 import {
   SalesAnalysis,
@@ -13,27 +12,30 @@ export function mapSalesAnalysis(sales: WithId<Sale>[]): SalesAnalysis {
   if (sales.length === 0) {
     return {
       edges: [],
+      salesCount: 0,
       native: {},
       usd: {},
     };
   }
   const map: {
-    [key: string]: {
-      pricesUsd: number[];
-      pricesNative: number[];
-      edge: SalesScatterEdge;
-    };
+    [key: string]: SalesScatterEdge;
   } = {};
 
   let salesCount = 0;
   // USD stats for all sales
   const pricesUsd = [];
+  let volumeUsd = 0;
   let totalRoyaltyFeesUsd = 0;
   let totalMarketplaceFeesUsd = 0;
+  let lowestUsd = Infinity;
+  let highestUsd = -Infinity;
   // Native stats for all sales
   const pricesNative = [];
+  let volumeNative = 0;
   let totalRoyaltyFeesNative = 0;
   let totalMarketplaceFeesNative = 0;
+  let lowestNative = Infinity;
+  let highestNative = -Infinity;
 
   // Group sales by fillSource
   for (const sale of sales) {
@@ -57,8 +59,14 @@ export function mapSalesAnalysis(sales: WithId<Sale>[]): SalesAnalysis {
 
       // USD stats for all sales
       pricesUsd.push(usd);
+      volumeUsd += usd;
+      lowestUsd = Math.min(lowestUsd, usd);
+      highestUsd = Math.max(highestUsd, usd);
       // Native stats for all sales
       pricesNative.push(native);
+      volumeNative += native;
+      lowestNative = Math.min(lowestNative, native);
+      highestNative = Math.max(highestNative, native);
 
       // Fees USD
       let royaltyFeesUsd = 0;
@@ -66,7 +74,6 @@ export function mapSalesAnalysis(sales: WithId<Sale>[]): SalesAnalysis {
       // Fees Native
       let royaltyFeesNative = 0;
       let marketplaceFeesNative = 0;
-
       for (const fee of sale.feeBreakdown) {
         if (fee.kind && fee.rawAmount && fee.bps !== undefined) {
           const bps = (fee.bps * BPS_VALUE) / 100;
@@ -94,81 +101,73 @@ export function mapSalesAnalysis(sales: WithId<Sale>[]): SalesAnalysis {
           }
         }
       }
+
       const fillSource = sale.fillSource;
 
       if (fillSource in map) {
         const object = map[fillSource];
-        object.pricesUsd.push(usd);
-        object.pricesNative.push(native);
-        object.edge.points.push(scatterPoint);
+        object.salesCount += 1;
+        object.points.push(scatterPoint);
         // Fees USD
-        object.edge.usd.royaltyFeeVolume += royaltyFeesUsd;
-        object.edge.usd.marketplaceFeeVolume += marketplaceFeesUsd;
+        object.usd.volume += usd;
+        object.usd.lowest = Math.min(object.usd.lowest, usd);
+        object.usd.highest = Math.max(object.usd.highest, usd);
+        object.usd.royaltyFeeVolume += royaltyFeesUsd;
+        object.usd.marketplaceFeeVolume += marketplaceFeesUsd;
         // Fees Native
-        object.edge.native.royaltyFeeVolume += royaltyFeesNative;
-        object.edge.native.marketplaceFeeVolume += marketplaceFeesNative;
+        object.usd.volume += native;
+        object.native.lowest = Math.min(object.native.lowest, usd);
+        object.native.highest = Math.max(object.native.highest, usd);
+        object.native.royaltyFeeVolume += royaltyFeesNative;
+        object.native.marketplaceFeeVolume += marketplaceFeesNative;
       } else {
         map[fillSource] = {
-          pricesUsd: [usd],
-          pricesNative: [native],
-          edge: {
-            name: fillSource.replace(SourceSpecialChar, '.'),
-            points: [scatterPoint],
-            usd: {
-              royaltyFeeVolume: royaltyFeesUsd,
-              marketplaceFeeVolume: marketplaceFeesUsd,
-            },
-            native: {
-              royaltyFeeVolume: royaltyFeesNative,
-              marketplaceFeeVolume: marketplaceFeesNative,
-            },
+          name: fillSource.replace(/\*/g, '.'),
+          points: [scatterPoint],
+          salesCount: 1,
+          usd: {
+            volume: usd,
+            lowest: usd,
+            highest: usd,
+            royaltyFeeVolume: royaltyFeesUsd,
+            marketplaceFeeVolume: marketplaceFeesUsd,
+          },
+          native: {
+            volume: native,
+            lowest: native,
+            highest: native,
+            royaltyFeeVolume: royaltyFeesNative,
+            marketplaceFeeVolume: marketplaceFeesNative,
           },
         };
       }
     }
   }
 
+  // Calculate average
   Object.values(map).forEach((object) => {
-    object.edge.usd = {
-      ...generateStatsForSales(object.pricesUsd),
-      ...object.edge.usd,
-    };
-
-    object.edge.native = {
-      ...generateStatsForSales(object.pricesNative),
-      ...object.edge.native,
-    };
+    object.usd.average = object.usd.volume / object.salesCount;
+    object.native.average = object.usd.volume / object.salesCount;
   });
 
   return {
-    edges: Object.values(map).map((object) => object.edge),
+    edges: Object.values(map).map((object) => object),
+    salesCount,
     usd: {
-      ...generateStatsForSales(pricesUsd),
+      average: volumeUsd / salesCount,
+      volume: volumeUsd,
+      lowest: lowestUsd,
+      highest: highestUsd,
       royaltyFeeVolume: totalRoyaltyFeesUsd,
       marketplaceFeeVolume: totalMarketplaceFeesUsd,
     },
     native: {
-      ...generateStatsForSales(pricesNative),
+      average: volumeNative / salesCount,
+      volume: volumeNative,
+      lowest: lowestNative,
+      highest: highestNative,
       royaltyFeeVolume: totalRoyaltyFeesNative,
       marketplaceFeeVolume: totalMarketplaceFeesNative,
     },
-  };
-}
-
-function generateStatsForSales(sales: number[]) {
-  const salesCount = sales.length;
-  const average = parseFloat(ss.average(sales).toFixed(3));
-  const volume = ss.sum(sales);
-  const lowest = ss.min(sales);
-  const highest = ss.max(sales);
-  const standardDeviation = parseFloat(ss.standardDeviation(sales).toFixed(3));
-
-  return {
-    salesCount,
-    average,
-    volume,
-    lowest,
-    highest,
-    standardDeviation,
   };
 }

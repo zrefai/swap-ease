@@ -4,6 +4,7 @@ extend type Query {
 
 type SalesAnalysis {
   edges: [SalesScatterEdge]!
+  salesCount: Int!
   usd: SalesStats!
   native: SalesStats!
 }
@@ -13,27 +14,16 @@ type SalesStats {
   volume: Float
   highest: Float
   lowest: Float
-  standardDeviation: Float
   royaltyFeeVolume: Float
   marketplaceFeeVolume: Float
 }
 
 type SalesScatterEdge {
   name: String!
-  usd: SalesScatterStats!
-  native: SalesScatterStats!
-  points: [SalesScatterPoint]!
-}
-
-type SalesScatterStats {
   salesCount: Int
-  average: Float
-  volume: Float
-  highest: Float
-  lowest: Float
-  standardDeviation: Float
-  royaltyFeeVolume: Float
-  marketplaceFeeVolume: Float
+  usd: SalesStats!
+  native: SalesStats!
+  points: [SalesScatterPoint]!
 }
 
 type SalesScatterPoint {
