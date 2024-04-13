@@ -1,7 +1,7 @@
 import { WithId } from 'mongodb';
-import { Cluster as GQLCLuster } from '../../../../__generated__/resolvers-types';
-import { mapTotalSalesByMarketplace } from '../../../mappers/map-total-sales-by-marketplace';
-import { mapAttributes } from '../../../mappers/map-attributes';
+import { Cluster as GQLCLuster } from '@server/__generated__/resolvers-types';
+import { mapTotalSalesByMarketplace } from '@server/schema/mappers/map-total-sales-by-marketplace';
+import { mapAttributes } from '@server/schema/mappers/map-attributes';
 import { Cluster } from 'swap-ease-data';
 
 export function mapCluster(cluster: WithId<Cluster>): GQLCLuster {

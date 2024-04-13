@@ -1,6 +1,6 @@
 import { WithId } from 'mongodb';
-import { ClustersAggregate as GQLClustersAggregate } from '../../../../__generated__/resolvers-types';
-import { mapTotalSalesByMarketplace } from '../../../mappers/map-total-sales-by-marketplace';
+import { ClustersAggregate as GQLClustersAggregate } from '@server/__generated__/resolvers-types';
+import { mapTotalSalesByMarketplace } from '@server/schema/mappers/map-total-sales-by-marketplace';
 import { ClustersAggregate } from 'swap-ease-data';
 
 export function mapClustersAggregate(

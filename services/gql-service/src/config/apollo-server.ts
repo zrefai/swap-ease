@@ -1,6 +1,6 @@
 import { buildSubgraphSchema } from '@apollo/subgraph';
 import { ApolloServer, ContextFunction } from '@apollo/server';
-import resolvers from '../schema';
+import resolvers from '@server/schema';
 import { loadFiles } from '@graphql-tools/load-files';
 import { GraphQLError } from 'graphql';
 import {
@@ -10,7 +10,7 @@ import {
 import {
   DataSourceContext,
   dataSourceContext,
-} from '../schema/data-source-context';
+} from '@server/schema/data-source-context';
 
 const port = process.env.PORT ?? '4001';
 const subgraphName = require('../../package.json').name;

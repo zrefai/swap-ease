@@ -1,4 +1,4 @@
-import { SaleByMarketplace } from '../../__generated__/resolvers-types';
+import { SaleByMarketplace } from '@server/__generated__/resolvers-types';
 
 export function mapTotalSalesByMarketplace(salesByMarketplace: {
   [key: string]: number;

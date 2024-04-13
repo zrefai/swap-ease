@@ -1,9 +1,9 @@
-import { getPaginatedResponse } from '../../../schema/utils/get-paginated-response';
+import { getPaginatedResponse } from '@server/schema/utils/get-paginated-response';
 import {
   Resolvers,
   Collection as GQLCollection,
   CollectionsConnection,
-} from '../../../__generated__/resolvers-types';
+} from '@server/__generated__/resolvers-types';
 import { mapCollection } from './mappers/map-collection';
 import { mapCollectionAttributes } from './mappers/map-collection-attributes';
 import { addCollection } from './mutations/add-collection';

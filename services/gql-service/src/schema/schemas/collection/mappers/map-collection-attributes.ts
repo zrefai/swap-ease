@@ -1,4 +1,4 @@
-import { CollectionAttribute } from '../../../../__generated__/resolvers-types';
+import { CollectionAttribute } from '@server/__generated__/resolvers-types';
 import { Collection, PartialModel } from 'swap-ease-data';
 
 export function mapCollectionAttributes(

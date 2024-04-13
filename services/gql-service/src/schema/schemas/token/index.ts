@@ -1,4 +1,4 @@
-import { Resolvers } from '../../../__generated__/resolvers-types';
+import { Resolvers } from '@server/__generated__/resolvers-types';
 import { mapToken } from './mappers/map-token';
 
 export const tokenResolvers: Resolvers = {
