@@ -1,7 +1,7 @@
 import assert from 'assert';
 import { aggregateAttributeData } from './utils/aggregate-attribute-data';
-import { Collections as ReservoirCollections } from 'src/apis/reservoir/collections/collections';
-import { Tokens } from 'src/apis/reservoir/tokens/tokens';
+import { Collections as ReservoirCollections } from '@server/apis/reservoir/collections/collections';
+import { Tokens } from '@server/apis/reservoir/tokens/tokens';
 import { calculateScores } from './utils/calculate-scores';
 import { mergeSortTokensByScore } from './utils/merge-sort-tokens-by-score';
 import { insertCollection } from './utils/insert-collection';
