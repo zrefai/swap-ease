@@ -14,6 +14,7 @@ export {
   Token,
   TokenAttribute,
   PartialModel,
+  SourceSpecialChar,
 } from './models';
 
 // Data functions and classes

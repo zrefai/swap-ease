@@ -13,14 +13,6 @@ export class Sales {
     return await this.sales.find({ contractAddress, tokenId }).toArray();
   }
 
-  async salesForCluster(clusterId: string) {
-    return await this.sales
-      .find({ clusterId })
-      .sort({ _id: 1 })
-      .limit(20)
-      .toArray();
-  }
-
   async getSalesLessThanDate(date: Date) {
     return await this.sales
       .aggregate([
@@ -32,6 +24,24 @@ export class Sales {
           },
         },
       ])
+      .toArray();
+  }
+
+  async salesForCluster(clusterId: string) {
+    return await this.sales
+      .find(
+        { clusterId },
+        {
+          projection: {
+            block: 1,
+            timestamp: 1,
+            fillSource: 1,
+            price: 1,
+            feeBreakdown: 1,
+          },
+        },
+      )
+      .sort({ _id: 1 })
       .toArray();
   }
 

@@ -18,7 +18,7 @@ export interface Sale {
   updatedAt?: string;
   royaltyFeeBps?: number;
   markeplaceFeeBps?: number;
-  feeBreakdown?: FeeBreakdown[];
+  feeBreakdown: FeeBreakdown[];
 }
 
 export interface Currency {
@@ -32,6 +32,7 @@ export interface Amount {
   raw: string;
   decimal: number;
   usd?: number;
+  native?: number;
 }
 
 export interface Price {
@@ -41,7 +42,7 @@ export interface Price {
 }
 
 export interface FeeBreakdown {
-  kind?: string;
+  kind?: 'royalty' | 'marketplace';
   bps?: number;
   recipient?: string;
   source?: string;

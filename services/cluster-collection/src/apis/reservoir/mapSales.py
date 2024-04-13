@@ -3,7 +3,6 @@ import uuid
 from models.sale import Sale, FeeBreakdown, Price, Amount, Currency
 from apis.reservoir.salesDataClasses import GetSalesResponse
 
-
 def mapGetSalesResponse(response) -> GetSalesResponse:
     sales: list[Sale] = []
 
@@ -11,6 +10,9 @@ def mapGetSalesResponse(response) -> GetSalesResponse:
     batchId = str(uuid.uuid4())
 
     for sale in response['sales']:
+        if sale['price']['amount']['raw'] == "1":
+            continue
+
         if sale['isDeleted'] == False:
             sales.append(Sale(
                 saleId=sale['saleId'],
@@ -21,9 +23,9 @@ def mapGetSalesResponse(response) -> GetSalesResponse:
                 timestamp=datetime.fromtimestamp(sale['timestamp'], timezone.utc),
                 contractAddress=sale['token']['contract'],
                 tokenId=sale['token']['tokenId'],
-                orderSource=sale['orderSource'].replace('.', '_'),
+                orderSource=sale['orderSource'].replace('.', '*'),
                 orderKind=sale['orderKind'],
-                fillSource=sale['fillSource'].replace('.', '_'),
+                fillSource=sale['fillSource'].replace('.', '*'),
                 fromAddress=sale['from'],
                 toAddress=sale['to'],
                 price=mapPrice(sale['price']),
@@ -31,7 +33,7 @@ def mapGetSalesResponse(response) -> GetSalesResponse:
                 marketplaceFeeBps=sale['marketplaceFeeBps'] if 'marketplaceFeeBps' in sale else None,
                 paidFullRoyalty=sale['paidFullRoyalty'] if 'paidFullRoyalty' in sale else None,
                 feeBreakdown=mapFeeBreakdown(
-                    sale['feeBreakdown']) if 'feeBreakdown' in sale else None,
+                    sale['feeBreakdown']) if 'feeBreakdown' in sale else [],
                 createdAt=sale['createdAt'],
                 updatedAt=sale['updatedAt']
             ))

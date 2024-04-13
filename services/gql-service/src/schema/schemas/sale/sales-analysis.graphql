@@ -1,0 +1,44 @@
+extend type Query {
+  salesAnalysis(clusterId: String!): SalesAnalysis!
+}
+
+type SalesAnalysis {
+  edges: [SalesScatterEdge]!
+  usd: SalesStats!
+  native: SalesStats!
+}
+
+type SalesStats {
+  average: Float
+  volume: Float
+  highest: Float
+  lowest: Float
+  standardDeviation: Float
+  royaltyFeeVolume: Float
+  marketplaceFeeVolume: Float
+}
+
+type SalesScatterEdge {
+  name: String!
+  usd: SalesScatterStats!
+  native: SalesScatterStats!
+  points: [SalesScatterPoint]!
+}
+
+type SalesScatterStats {
+  salesCount: Int
+  average: Float
+  volume: Float
+  highest: Float
+  lowest: Float
+  standardDeviation: Float
+  royaltyFeeVolume: Float
+  marketplaceFeeVolume: Float
+}
+
+type SalesScatterPoint {
+  native: Float
+  blockNumber: Int!
+  usd: Float
+  timestamp: Date!
+}

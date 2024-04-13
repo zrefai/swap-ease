@@ -139,6 +139,7 @@ export type Query = {
   collection?: Maybe<Collection>;
   collectionAttributes?: Maybe<Array<Maybe<CollectionAttribute>>>;
   collections: CollectionsConnection;
+  salesAnalysis: SalesAnalysis;
   salesForCluster: SalesConnection;
   salesForToken: SalesConnection;
   token?: Maybe<Token>;
@@ -173,6 +174,11 @@ export type QueryCollectionAttributesArgs = {
 
 export type QueryCollectionsArgs = {
   pageArgs?: InputMaybe<PageArgs>;
+};
+
+
+export type QuerySalesAnalysisArgs = {
+  clusterId: Scalars['String']['input'];
 };
 
 
@@ -269,10 +275,56 @@ export type SalePriceCurrency = {
   symbol?: Maybe<Scalars['String']['output']>;
 };
 
+export type SalesAnalysis = {
+  __typename?: 'SalesAnalysis';
+  edges: Array<Maybe<SalesScatterEdge>>;
+  native: SalesStats;
+  usd: SalesStats;
+};
+
 export type SalesConnection = {
   __typename?: 'SalesConnection';
   edges: Array<Maybe<SaleEdge>>;
   pageInfo: PageInfo;
+};
+
+export type SalesScatterEdge = {
+  __typename?: 'SalesScatterEdge';
+  name: Scalars['String']['output'];
+  native: SalesScatterStats;
+  points: Array<Maybe<SalesScatterPoint>>;
+  usd: SalesScatterStats;
+};
+
+export type SalesScatterPoint = {
+  __typename?: 'SalesScatterPoint';
+  blockNumber: Scalars['Int']['output'];
+  native?: Maybe<Scalars['Float']['output']>;
+  timestamp: Scalars['Date']['output'];
+  usd?: Maybe<Scalars['Float']['output']>;
+};
+
+export type SalesScatterStats = {
+  __typename?: 'SalesScatterStats';
+  average?: Maybe<Scalars['Float']['output']>;
+  highest?: Maybe<Scalars['Float']['output']>;
+  lowest?: Maybe<Scalars['Float']['output']>;
+  marketplaceFeeVolume?: Maybe<Scalars['Float']['output']>;
+  royaltyFeeVolume?: Maybe<Scalars['Float']['output']>;
+  salesCount?: Maybe<Scalars['Int']['output']>;
+  standardDeviation?: Maybe<Scalars['Float']['output']>;
+  volume?: Maybe<Scalars['Float']['output']>;
+};
+
+export type SalesStats = {
+  __typename?: 'SalesStats';
+  average?: Maybe<Scalars['Float']['output']>;
+  highest?: Maybe<Scalars['Float']['output']>;
+  lowest?: Maybe<Scalars['Float']['output']>;
+  marketplaceFeeVolume?: Maybe<Scalars['Float']['output']>;
+  royaltyFeeVolume?: Maybe<Scalars['Float']['output']>;
+  standardDeviation?: Maybe<Scalars['Float']['output']>;
+  volume?: Maybe<Scalars['Float']['output']>;
 };
 
 export type Token = {
@@ -405,7 +457,12 @@ export type ResolversTypes = ResolversObject<{
   SalePrice: ResolverTypeWrapper<SalePrice>;
   SalePriceAmount: ResolverTypeWrapper<SalePriceAmount>;
   SalePriceCurrency: ResolverTypeWrapper<SalePriceCurrency>;
+  SalesAnalysis: ResolverTypeWrapper<SalesAnalysis>;
   SalesConnection: ResolverTypeWrapper<SalesConnection>;
+  SalesScatterEdge: ResolverTypeWrapper<SalesScatterEdge>;
+  SalesScatterPoint: ResolverTypeWrapper<SalesScatterPoint>;
+  SalesScatterStats: ResolverTypeWrapper<SalesScatterStats>;
+  SalesStats: ResolverTypeWrapper<SalesStats>;
   Token: ResolverTypeWrapper<Token>;
   TokenAttribute: ResolverTypeWrapper<TokenAttribute>;
 }>;
@@ -441,7 +498,12 @@ export type ResolversParentTypes = ResolversObject<{
   SalePrice: SalePrice;
   SalePriceAmount: SalePriceAmount;
   SalePriceCurrency: SalePriceCurrency;
+  SalesAnalysis: SalesAnalysis;
   SalesConnection: SalesConnection;
+  SalesScatterEdge: SalesScatterEdge;
+  SalesScatterPoint: SalesScatterPoint;
+  SalesScatterStats: SalesScatterStats;
+  SalesStats: SalesStats;
   Token: Token;
   TokenAttribute: TokenAttribute;
 }>;
@@ -573,6 +635,7 @@ export type QueryResolvers<ContextType = DataSourceContext, ParentType extends R
   collection?: Resolver<Maybe<ResolversTypes['Collection']>, ParentType, ContextType, RequireFields<QueryCollectionArgs, 'id'>>;
   collectionAttributes?: Resolver<Maybe<Array<Maybe<ResolversTypes['CollectionAttribute']>>>, ParentType, ContextType, RequireFields<QueryCollectionAttributesArgs, 'id'>>;
   collections?: Resolver<ResolversTypes['CollectionsConnection'], ParentType, ContextType, Partial<QueryCollectionsArgs>>;
+  salesAnalysis?: Resolver<ResolversTypes['SalesAnalysis'], ParentType, ContextType, RequireFields<QuerySalesAnalysisArgs, 'clusterId'>>;
   salesForCluster?: Resolver<ResolversTypes['SalesConnection'], ParentType, ContextType, RequireFields<QuerySalesForClusterArgs, 'clusterId'>>;
   salesForToken?: Resolver<ResolversTypes['SalesConnection'], ParentType, ContextType, RequireFields<QuerySalesForTokenArgs, 'contractAddress' | 'tokenId'>>;
   token?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<QueryTokenArgs, 'contractAddress' | 'tokenId'>>;
@@ -649,9 +712,55 @@ export type SalePriceCurrencyResolvers<ContextType = DataSourceContext, ParentTy
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type SalesAnalysisResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['SalesAnalysis'] = ResolversParentTypes['SalesAnalysis']> = ResolversObject<{
+  edges?: Resolver<Array<Maybe<ResolversTypes['SalesScatterEdge']>>, ParentType, ContextType>;
+  native?: Resolver<ResolversTypes['SalesStats'], ParentType, ContextType>;
+  usd?: Resolver<ResolversTypes['SalesStats'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type SalesConnectionResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['SalesConnection'] = ResolversParentTypes['SalesConnection']> = ResolversObject<{
   edges?: Resolver<Array<Maybe<ResolversTypes['SaleEdge']>>, ParentType, ContextType>;
   pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type SalesScatterEdgeResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['SalesScatterEdge'] = ResolversParentTypes['SalesScatterEdge']> = ResolversObject<{
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  native?: Resolver<ResolversTypes['SalesScatterStats'], ParentType, ContextType>;
+  points?: Resolver<Array<Maybe<ResolversTypes['SalesScatterPoint']>>, ParentType, ContextType>;
+  usd?: Resolver<ResolversTypes['SalesScatterStats'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type SalesScatterPointResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['SalesScatterPoint'] = ResolversParentTypes['SalesScatterPoint']> = ResolversObject<{
+  blockNumber?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  native?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  timestamp?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  usd?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type SalesScatterStatsResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['SalesScatterStats'] = ResolversParentTypes['SalesScatterStats']> = ResolversObject<{
+  average?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  highest?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  lowest?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  marketplaceFeeVolume?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  royaltyFeeVolume?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  salesCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  standardDeviation?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  volume?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type SalesStatsResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['SalesStats'] = ResolversParentTypes['SalesStats']> = ResolversObject<{
+  average?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  highest?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  lowest?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  marketplaceFeeVolume?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  royaltyFeeVolume?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  standardDeviation?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  volume?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -698,7 +807,12 @@ export type Resolvers<ContextType = DataSourceContext> = ResolversObject<{
   SalePrice?: SalePriceResolvers<ContextType>;
   SalePriceAmount?: SalePriceAmountResolvers<ContextType>;
   SalePriceCurrency?: SalePriceCurrencyResolvers<ContextType>;
+  SalesAnalysis?: SalesAnalysisResolvers<ContextType>;
   SalesConnection?: SalesConnectionResolvers<ContextType>;
+  SalesScatterEdge?: SalesScatterEdgeResolvers<ContextType>;
+  SalesScatterPoint?: SalesScatterPointResolvers<ContextType>;
+  SalesScatterStats?: SalesScatterStatsResolvers<ContextType>;
+  SalesStats?: SalesStatsResolvers<ContextType>;
   Token?: TokenResolvers<ContextType>;
   TokenAttribute?: TokenAttributeResolvers<ContextType>;
 }>;

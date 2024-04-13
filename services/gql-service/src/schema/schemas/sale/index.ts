@@ -6,6 +6,7 @@ import {
 } from '../../../__generated__/resolvers-types';
 import { Sale } from 'swap-ease-data';
 import { mapSale } from './mappers/map-sale';
+import { mapSalesAnalysis } from './mappers/map-sales-analysis';
 
 export const saleResolvers: Resolvers = {
   Query: {
@@ -27,5 +28,10 @@ export const saleResolvers: Resolvers = {
         mapFn: mapSale,
         pageArgs,
       }),
+    salesAnalysis: async (_parent, { clusterId }, context) => {
+      const documents =
+        await context.dataSources.sales.salesForCluster(clusterId);
+      return mapSalesAnalysis(documents);
+    },
   },
 };
