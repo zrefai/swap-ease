@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { MantineProvider } from '@mantine/core';
+import { Root } from '.';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
-const Root = () => {
-  return <div>hello</div>;
-};
+const client = new ApolloClient({
+  uri: 'https://flyby-router-demo.herokuapp.com/',
+  cache: new InMemoryCache(),
+});
 
 const router = createBrowserRouter([
   {
@@ -17,8 +20,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <MantineProvider>
-      <RouterProvider router={router} />
-    </MantineProvider>
+    <ApolloProvider client={client}>
+      <MantineProvider>
+        <RouterProvider router={router} />
+      </MantineProvider>
+    </ApolloProvider>
   </React.StrictMode>
 );
