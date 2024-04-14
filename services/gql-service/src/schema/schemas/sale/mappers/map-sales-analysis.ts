@@ -115,9 +115,9 @@ export function mapSalesAnalysis(sales: WithId<Sale>[]): SalesAnalysis {
         object.usd.royaltyFeeVolume += royaltyFeesUsd;
         object.usd.marketplaceFeeVolume += marketplaceFeesUsd;
         // Fees Native
-        object.usd.volume += native;
-        object.native.lowest = Math.min(object.native.lowest, usd);
-        object.native.highest = Math.max(object.native.highest, usd);
+        object.native.volume += native;
+        object.native.lowest = Math.min(object.native.lowest, native);
+        object.native.highest = Math.max(object.native.highest, native);
         object.native.royaltyFeeVolume += royaltyFeesNative;
         object.native.marketplaceFeeVolume += marketplaceFeesNative;
       } else {
@@ -147,7 +147,7 @@ export function mapSalesAnalysis(sales: WithId<Sale>[]): SalesAnalysis {
   // Calculate average
   Object.values(map).forEach((object) => {
     object.usd.average = object.usd.volume / object.salesCount;
-    object.native.average = object.usd.volume / object.salesCount;
+    object.native.average = object.native.volume / object.salesCount;
   });
 
   return {
