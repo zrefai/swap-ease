@@ -1,5 +1,5 @@
 import { Collection } from 'swap-ease-data';
-import { Collection as GQLCollection } from '@server/__generated__/resolvers-types';
+import { Collection as GQLCollection } from '../../../../__generated__/resolvers-types';
 import { WithId } from 'mongodb';
 
 export function mapCollection(collection: WithId<Collection>): GQLCollection {

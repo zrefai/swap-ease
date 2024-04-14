@@ -3,7 +3,7 @@ import { Token } from 'swap-ease-data';
 import {
   Token as GQLToken,
   TokenAttribute,
-} from '@server/__generated__/resolvers-types';
+} from '../../../../__generated__/resolvers-types';
 
 export function mapToken(token: WithId<Token>): GQLToken {
   return {

@@ -8,7 +8,7 @@
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
-    "removeComments": true,
+    "removeComments": true, 
     "skipLibCheck": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
@@ -18,8 +18,7 @@
     "types": ["node", "jest"],
     "baseUrl": ".",
     "paths": {
-      "*": ["types/*"],
-      "@server/*": ["src/*"]
+      "*": ["types/*"]
     }
   },
   "exclude": ["codegen.ts", "dist"]

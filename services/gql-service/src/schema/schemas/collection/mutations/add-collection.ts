@@ -1,11 +1,11 @@
-import { DataSourceContext } from '@server/schema/data-source-context';
+import { DataSourceContext } from '../../../data-source-context';
 import {
   MutationAddCollectionArgs,
   MutationResponse,
   Resolver,
   ResolverTypeWrapper,
-} from '@server/__generated__/resolvers-types';
-import { produce } from '@server/config/rabbit-mq-client';
+} from '../../../../__generated__/resolvers-types';
+import { produce } from '../../../../config/rabbit-mq-client';
 
 export const addCollection: Resolver<
   ResolverTypeWrapper<MutationResponse>,

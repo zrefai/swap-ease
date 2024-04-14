@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
-import dbClient from '@server/config/db-client';
-import startApolloServer from '@server/config/apollo-server';
+import dbClient from './config/db-client';
+import startApolloServer from './config/apollo-server';
 // import { verifyEnvVariables } from 'swap-ease-utils';
 
 dotenv.config();

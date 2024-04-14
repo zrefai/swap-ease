@@ -1,4 +1,4 @@
-import { Resolvers } from '@server/__generated__/resolvers-types';
+import { Resolvers } from '../../../__generated__/resolvers-types';
 import { mapClustersAggregate } from './mappers/map-clusters-aggregate';
 
 export const clustersAggregateResovlers: Resolvers = {

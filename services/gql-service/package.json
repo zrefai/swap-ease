@@ -62,9 +62,6 @@
       }
     }
   },
-  "_moduleAliases": {
-    "@server": "./src/*"
-  },
   "prettier": {
     "singleQuote": true
   }

@@ -4,7 +4,7 @@ import { formatEther, getBigInt } from 'ethers';
 import {
   SalesAnalysis,
   SalesScatterEdge,
-} from '@server/__generated__/resolvers-types';
+} from '../../../../__generated__/resolvers-types';
 
 const BPS_VALUE = 0.01;
 

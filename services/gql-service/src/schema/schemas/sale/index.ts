@@ -1,9 +1,9 @@
-import { getPaginatedResponse } from '@server/schema/utils/get-paginated-response';
+import { getPaginatedResponse } from '../../utils/get-paginated-response';
 import {
   Resolvers,
   Sale as GQLSale,
   SalesConnection,
-} from '@server/__generated__/resolvers-types';
+} from '../../../__generated__/resolvers-types';
 import { Sale } from 'swap-ease-data';
 import { mapSale } from './mappers/map-sale';
 import { mapSalesAnalysis } from './mappers/map-sales-analysis';

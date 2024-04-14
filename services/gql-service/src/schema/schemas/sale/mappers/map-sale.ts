@@ -1,6 +1,6 @@
 import { WithId } from 'mongodb';
 import { Sale } from 'swap-ease-data';
-import { Sale as GQLSale } from '@server/__generated__/resolvers-types';
+import { Sale as GQLSale } from '../../../../__generated__/resolvers-types';
 
 export function mapSale(sale: WithId<Sale>): GQLSale {
   return {

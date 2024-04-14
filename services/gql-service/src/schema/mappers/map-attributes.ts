@@ -1,7 +1,7 @@
 import {
   Attribute,
   AttributeValues,
-} from '@server/__generated__/resolvers-types';
+} from '../../__generated__/resolvers-types';
 
 export function mapAttributes(attributes: {
   [key: string]: { [key: string]: number };
