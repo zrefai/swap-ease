@@ -1,4 +1,4 @@
-import { AddCollection } from '@server/handlers/collections/add-collection.handler';
+import { AddCollection } from '@handlers/collections/add-collection.handler';
 import amqp from 'amqplib';
 import dotenv from 'dotenv';
 

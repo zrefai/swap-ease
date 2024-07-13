@@ -42,7 +42,7 @@ export interface Price {
 }
 
 export interface FeeBreakdown {
-  kind?: 'royalty' | 'marketplace';
+  kind?: string;
   bps?: number;
   recipient?: string;
   source?: string;

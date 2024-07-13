@@ -3,32 +3,32 @@ extend type Query {
 }
 
 type SalesAnalysis {
-  edges: [SalesScatterEdge]!
+  edges: [SalesScatterEdge!]!
   salesCount: Int!
   usd: SalesStats!
   native: SalesStats!
 }
 
 type SalesStats {
-  average: Float
-  volume: Float
-  highest: Float
-  lowest: Float
-  royaltyFeeVolume: Float
-  marketplaceFeeVolume: Float
+  average: Float!
+  volume: Float!
+  highest: Float!
+  lowest: Float!
+  royaltyFeeVolume: Float!
+  marketplaceFeeVolume: Float!
 }
 
 type SalesScatterEdge {
   name: String!
-  salesCount: Int
+  salesCount: Int!
   usd: SalesStats!
   native: SalesStats!
   points: [SalesScatterPoint]!
 }
 
 type SalesScatterPoint {
-  native: Float
+  native: Float!
   blockNumber: Int!
-  usd: Float
+  usd: Float!
   timestamp: Date!
 }

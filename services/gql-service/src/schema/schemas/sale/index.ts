@@ -19,14 +19,14 @@ export const saleResolvers: Resolvers = {
         args: { contractAddress, tokenId },
         collection: context.dataSources.sales.sales,
         mapFn: mapSale,
-        pageArgs,
+        pageArgs: pageArgs ?? undefined,
       }),
     salesForCluster: async (_parent, { clusterId, pageArgs }, context) =>
       await getPaginatedResponse<Sale, any, GQLSale, SalesConnection>({
         args: { clusterId },
         collection: context.dataSources.sales.sales,
         mapFn: mapSale,
-        pageArgs,
+        pageArgs: pageArgs ?? undefined,
       }),
     salesAnalysis: async (_parent, { clusterId }, context) => {
       const documents =

@@ -6,14 +6,14 @@ import {
 } from '../../../__generated__/resolvers-types';
 import { mapCollection } from './mappers/map-collection';
 import { mapCollectionAttributes } from './mappers/map-collection-attributes';
-import { addCollection } from './mutations/add-collection';
 import { Collection } from 'swap-ease-data';
+import { produce } from '@config/rabbit-mq-client';
 
 export const collectionResolvers: Resolvers = {
   Query: {
     collection: async (_parent, { id }, context) => {
       const document = await context.dataSources.collections.findOne(id);
-      return mapCollection(document);
+      return document ? mapCollection(document) : null;
     },
     collections: async (_parent, { pageArgs }, context) =>
       await getPaginatedResponse<
@@ -25,16 +25,33 @@ export const collectionResolvers: Resolvers = {
         args: {},
         collection: context.dataSources.collections.collections,
         mapFn: mapCollection,
-        pageArgs,
+        pageArgs: pageArgs ?? undefined,
         options: { projection: { attributes: 0 } },
       }),
     collectionAttributes: async (_parent, { id }, context) => {
       const document =
         await context.dataSources.collections.getCollectionAttributes(id);
-      return mapCollectionAttributes(document);
+      return document ? mapCollectionAttributes(document) : null;
     },
   },
   Mutation: {
-    addCollection,
+    addCollection: async (_parent, { contractAddress }) => {
+      // Need to add separate collection to track contract addresses that were just entered
+      const result = await produce(contractAddress);
+
+      if (result) {
+        return {
+          code: 200,
+          message: 'Successfully posted to message to MQ',
+          success: true,
+        };
+      }
+
+      return {
+        code: 500,
+        message: 'Could not send message to MQ',
+        success: false,
+      };
+    },
   },
 };

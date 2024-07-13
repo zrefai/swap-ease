@@ -1,4 +1,11 @@
-import { Collection, FindOptions, ObjectId, WithId } from 'mongodb';
+import {
+  Collection,
+  FindOptions,
+  ObjectId,
+  WithId,
+  Document,
+  Filter,
+} from 'mongodb';
 import { PageArgs } from '../../__generated__/resolvers-types';
 import { GraphQLError } from 'graphql';
 import assert from 'assert';
@@ -6,7 +13,7 @@ import assert from 'assert';
 const QUERY_LIMIT = 21;
 const PAGE_LIMIT = 20;
 
-interface GetPaginatedResponseArgs<T, K, H, S> {
+interface GetPaginatedResponseArgs<T extends Document, K, H, S> {
   args: K;
   collection: Collection<T>;
   mapFn: (doc: WithId<T>) => H;
@@ -14,7 +21,7 @@ interface GetPaginatedResponseArgs<T, K, H, S> {
   options?: FindOptions<T>;
 }
 
-export const getPaginatedResponse = async <T, K, H, S>({
+export const getPaginatedResponse = async <T extends Document, K, H, S>({
   args,
   collection,
   mapFn,
@@ -60,7 +67,7 @@ export const getPaginatedResponse = async <T, K, H, S>({
   } as S;
 };
 
-const applyCursorsToEdges = async <T, K>(
+const applyCursorsToEdges = async <T extends Document, K>(
   args: K,
   collection: Collection<T>,
   before?: string,
@@ -97,7 +104,7 @@ const applyCursorsToEdges = async <T, K>(
     .toArray();
 };
 
-const hasPreviousPage = async <T, K>(
+const hasPreviousPage = async <T extends Document, K>(
   args: K,
   documents: WithId<T>[],
   collection: Collection<T>,
@@ -115,7 +122,7 @@ const hasPreviousPage = async <T, K>(
     const query = {
       _id: { $lt: documents[0]?._id },
       ...args,
-    };
+    } as Filter<T>;
     const previousDocs = await collection.find(query).limit(1).toArray();
 
     return previousDocs.length > 0;
@@ -124,7 +131,7 @@ const hasPreviousPage = async <T, K>(
   return false;
 };
 
-const hasNextPage = async <T, K>(
+const hasNextPage = async <T extends Document, K>(
   args: K,
   documents: WithId<T>[],
   collection: Collection<T>,
@@ -142,7 +149,7 @@ const hasNextPage = async <T, K>(
     const query = {
       _id: { $gt: documents[documents.length - 1]?._id },
       ...args,
-    };
+    } as Filter<T>;
     const nextDocs = await collection.find(query).limit(1).toArray();
 
     return nextDocs.length > 0;

@@ -13,8 +13,22 @@ export function mapSalesAnalysis(sales: WithId<Sale>[]): SalesAnalysis {
     return {
       edges: [],
       salesCount: 0,
-      native: {},
-      usd: {},
+      native: {
+        average: 0,
+        volume: 0,
+        highest: 0,
+        lowest: 0,
+        royaltyFeeVolume: 0,
+        marketplaceFeeVolume: 0,
+      },
+      usd: {
+        average: 0,
+        volume: 0,
+        highest: 0,
+        lowest: 0,
+        royaltyFeeVolume: 0,
+        marketplaceFeeVolume: 0,
+      },
     };
   }
   const map: {
@@ -45,8 +59,8 @@ export function mapSalesAnalysis(sales: WithId<Sale>[]): SalesAnalysis {
       currencySymbol &&
       (currencySymbol === 'WETH' || currencySymbol === 'ETH')
     ) {
-      const native = sale.price.amount.native;
-      const usd = sale.price.amount.usd;
+      const native = sale.price.amount.native ?? 0;
+      const usd = sale.price.amount.usd ?? 0;
 
       const scatterPoint = {
         usd,
@@ -77,7 +91,7 @@ export function mapSalesAnalysis(sales: WithId<Sale>[]): SalesAnalysis {
       for (const fee of sale.feeBreakdown) {
         if (fee.kind && fee.rawAmount && fee.bps !== undefined) {
           const bps = (fee.bps * BPS_VALUE) / 100;
-          const rawAmountInUsd = sale.price.amount.usd * bps;
+          const rawAmountInUsd = usd * bps;
           const rawAmountInNative = parseFloat(
             formatEther(getBigInt(fee.rawAmount)),
           );
@@ -106,6 +120,7 @@ export function mapSalesAnalysis(sales: WithId<Sale>[]): SalesAnalysis {
 
       if (fillSource in map) {
         const object = map[fillSource];
+
         object.salesCount += 1;
         object.points.push(scatterPoint);
         // Fees USD
@@ -126,6 +141,7 @@ export function mapSalesAnalysis(sales: WithId<Sale>[]): SalesAnalysis {
           points: [scatterPoint],
           salesCount: 1,
           usd: {
+            average: 0,
             volume: usd,
             lowest: usd,
             highest: usd,
@@ -133,6 +149,7 @@ export function mapSalesAnalysis(sales: WithId<Sale>[]): SalesAnalysis {
             marketplaceFeeVolume: marketplaceFeesUsd,
           },
           native: {
+            average: 0,
             volume: native,
             lowest: native,
             highest: native,

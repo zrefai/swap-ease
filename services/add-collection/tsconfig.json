@@ -1,32 +1,29 @@
 {
   "compilerOptions": {
+    "skipLibCheck": true,
+    "incremental": true,
     "target": "es6",
     "module": "commonjs",
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "allowJs": true,
-    "importHelpers": true,
-    "jsx": "react",
-    "alwaysStrict": true,
+    "declaration": true,
     "sourceMap": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "strictNullChecks": true,
     "outDir": "./dist",
-    "baseUrl": ".",
-    "paths": { "@server/*": ["src/*"] },
-    "skipLibCheck": true
+    "removeComments": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "baseUrl": "./src",
+    "paths": {
+      "@config/*": ["config/*"],
+      "@handlers/*": ["handlers/*"],
+      "@apis/*": ["apis/*"]
+    },
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
   },
-  "include": ["./src/**/*"],
-  "exclude": ["./node_modules", "./dist"],
-  "ts-node": {
-    // Do not forget to `npm i -D tsconfig-paths`
-    "require": ["tsconfig-paths/register"]
-  }
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

@@ -108,12 +108,14 @@ function mapCurrency(currency?: definitions['currency']): Currency {
 
 function mapFeeBreakdown(
   feeBreakdown?: definitions['Model57'],
-): FeeBreakdown[] | undefined {
-  return feeBreakdown?.map((fee) => ({
-    kind: fee.kind,
-    bps: fee.bps,
-    recipient: fee.recipient,
-    source: fee.source,
-    rawAmount: fee.rawAmount,
-  }));
+): FeeBreakdown[] {
+  return feeBreakdown
+    ? feeBreakdown.map((fee) => ({
+        kind: fee.kind,
+        bps: fee.bps,
+        recipient: fee.recipient,
+        source: fee.source,
+        rawAmount: fee.rawAmount,
+      }))
+    : [];
 }

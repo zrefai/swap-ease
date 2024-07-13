@@ -3,6 +3,7 @@
 Mono-repo for all the components of the swap-ease project. A project that enables people to arbitrage trade NFT tokens using insightful data.
 
 // TODO: Maybe we can have the scatter plot switch between native and USD prices
+// TODO: Follow this for alias resolutions https://github.com/ilearnio/module-alias/issues/74
 
 ## Setup
 

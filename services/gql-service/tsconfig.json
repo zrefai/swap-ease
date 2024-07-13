@@ -1,25 +1,29 @@
 {
   "compilerOptions": {
-    "rootDir": "./src",
-    "outDir": "./dist",
-    "target": "esnext",
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
-    "removeComments": true, 
     "skipLibCheck": true,
-    "noImplicitAny": true,
+    "incremental": true,
+    "target": "es6",
+    "module": "commonjs",
+    "declaration": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "removeComments": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noUnusedLocals": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "forceConsistentCasingInFileNames": true,
-    "lib": ["esnext", "esnext.asynciterable", "DOM"],
-    "types": ["node", "jest"],
-    "baseUrl": ".",
+    "moduleResolution": "node",
+    "baseUrl": "./src",
     "paths": {
-      "*": ["types/*"]
-    }
+      "@config/*": ["config/*"],
+      "@generated/*": ["__generated__/*"],
+      "@schema/*": ["schema/*"]
+    },
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
   },
-  "exclude": ["codegen.ts", "dist"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

@@ -1,4 +1,4 @@
-import { client, db } from '@server/config/db-client';
+import { client, db } from '@config/db-client';
 import { Collection, Collections, Token, Tokens } from 'swap-ease-data';
 
 export async function insertCollection(

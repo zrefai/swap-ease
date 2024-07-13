@@ -1,12 +1,12 @@
 import assert from 'assert';
 import { aggregateAttributeData } from './utils/aggregate-attribute-data';
-import { Collections as ReservoirCollections } from '@server/apis/reservoir/collections/collections';
-import { Tokens } from '@server/apis/reservoir/tokens/tokens';
+import { Collections as ReservoirCollections } from '@apis/reservoir/collections/collections';
+import { Tokens } from '@apis/reservoir/tokens/tokens';
 import { calculateScores } from './utils/calculate-scores';
 import { mergeSortTokensByScore } from './utils/merge-sort-tokens-by-score';
 import { insertCollection } from './utils/insert-collection';
 import { Collections } from 'swap-ease-data';
-import { db } from '@server/config/db-client';
+import { db } from '@config/db-client';
 
 export class AddCollection {
   private collections: Collections;

@@ -1,9 +1,9 @@
 import dotenv from 'dotenv';
-import '@server/config/rabbit-mq-client';
-import dbClient from '@server/config/db-client';
+import '@config/rabbit-mq-client';
+import dbClient from '@config/db-client';
 import { verifyEnvVariables } from 'swap-ease-utils';
 // import { consumeAndProduce } from './config/rabbit-mq-client';
-import { AddCollection } from '@server/handlers/collections/add-collection.handler';
+import { AddCollection } from '@handlers/collections/add-collection.handler';
 
 dotenv.config();
 
